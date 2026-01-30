@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useSnackbar } from "notistack";
 
+
 // ✅ CORRECT IMPORT PATH (IMPORTANT)
 import {
   addToWishlist,

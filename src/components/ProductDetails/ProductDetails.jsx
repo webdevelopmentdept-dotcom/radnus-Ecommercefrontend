@@ -24,6 +24,7 @@ import {
 } from "../../actions/wishlistAction";
 import MetaData from "../Layouts/MetaData";
 
+
 const PreviousBtn = ({ onClick }) => (
   <button
     onClick={onClick}

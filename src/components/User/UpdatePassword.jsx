@@ -9,6 +9,7 @@ import BackdropLoader from "../Layouts/BackdropLoader";
 import MetaData from "../Layouts/MetaData";
 
 
+
 const UpdatePassword = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
