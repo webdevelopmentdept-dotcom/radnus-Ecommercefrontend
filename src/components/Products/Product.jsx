@@ -11,7 +11,7 @@ import {
 } from "../../actions/wishlistAction";
 
 const Product = (props) => {
-  // ✅ DEFAULT VALUES – avoids toLocaleString crash
+  
  const {
   _id,
   name,
@@ -26,7 +26,7 @@ const Product = (props) => {
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
 
-  // const { user } = useSelector((state) => state.user);
+
 
 let displayPrice = price;
 

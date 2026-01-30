@@ -1,7 +1,7 @@
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Slider from "react-slick";
 import {
   clearErrors,
@@ -13,10 +13,7 @@ import Loader from "../Layouts/Loader";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FlashOnIcon from "@mui/icons-material/FlashOn";
 import StarIcon from "@mui/icons-material/Star";
-import LocalOfferIcon from "@mui/icons-material/LocalOffer";
-import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
-import CachedIcon from "@mui/icons-material/Cached";
-import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
+
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Rating from "@mui/material/Rating";
 import { addItemsToCart } from "../../actions/cartAction";
