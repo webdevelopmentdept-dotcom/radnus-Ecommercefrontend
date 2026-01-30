@@ -26,7 +26,7 @@ const Product = (props) => {
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
 
-  const { user } = useSelector((state) => state.user);
+  // const { user } = useSelector((state) => state.user);
 
 let displayPrice = price;
 

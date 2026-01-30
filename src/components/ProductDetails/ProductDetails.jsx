@@ -19,7 +19,6 @@ import CachedIcon from "@mui/icons-material/Cached";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Rating from "@mui/material/Rating";
-import TextField from "@mui/material/TextField";
 import { addItemsToCart } from "../../actions/cartAction";
 import { getDeliveryDate } from "../../utils/functions";
 import {

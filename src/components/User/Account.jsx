@@ -21,7 +21,7 @@ const Account = () => {
   if (loading) return <Loader />;
 
   const firstName = user.name.split(" ")[0];
-  const lastName = user.name.split(" ").slice(1).join(" ");
+  // const lastName = user.name.split(" ").slice(1).join(" ");
 
 
 
