@@ -134,9 +134,6 @@ const [zoomImage, setZoomImage] = useState(null);
     enqueueSnackbar("Product Added To Cart", { variant: "success" });
   };
 
-
-
-
   const itemInCart = cartItems.some((i) => i.product === productId);
 
   const goToCart = () => {
