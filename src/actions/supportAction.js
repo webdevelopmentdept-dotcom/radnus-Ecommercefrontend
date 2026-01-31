@@ -1,5 +1,4 @@
-import axios from "axios";
-
+import axios from "../axios";
 export const submitSupportRequest = (formData) => async (dispatch) => {
   try {
     dispatch({ type: "SUPPORT_REQUEST" });
@@ -19,7 +18,7 @@ export const submitSupportRequest = (formData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "SUPPORT_FAIL",
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };

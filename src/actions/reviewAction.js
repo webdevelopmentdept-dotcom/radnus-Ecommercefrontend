@@ -1,5 +1,4 @@
-import axios from "axios";
-import {
+import axios from "../axios";import {
   SUBMIT_REVIEW_REQUEST,
   SUBMIT_REVIEW_SUCCESS,
   SUBMIT_REVIEW_FAIL,
