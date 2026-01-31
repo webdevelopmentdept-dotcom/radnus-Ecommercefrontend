@@ -37,12 +37,13 @@
     "webfontloader": "^1.6.28"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "set \"GENERATE_SOURCEMAP=false\" &&  react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "analyze": "source-map-explorer 'build/static/js/*.js'"
-  },
+  "start": "react-scripts start",
+  "build": "DISABLE_ESLINT_PLUGIN=true GENERATE_SOURCEMAP=false react-scripts build",
+  "test": "react-scripts test",
+  "eject": "react-scripts eject",
+  "analyze": "source-map-explorer 'build/static/js/*.js'"
+},
+
   "eslintConfig": {
     "extends": [
       "react-app",
