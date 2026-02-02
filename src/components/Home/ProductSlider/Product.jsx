@@ -61,10 +61,15 @@ if (user?.role === "dealer") {
      {/* IMAGE */}
 <Link to={`/product/${_id}`} className="product-image">
   <img
-    src={images?.[0]?.url || "/placeholder.png"}
-    alt={name}
-    className="mx-auto"
-  />
+  src={
+    images?.[0]?.url
+      ? `${process.env.REACT_APP_BACKEND_URL}${images[0].url}`
+      : "/placeholder.png"
+  }
+  alt={name}
+  className="mx-auto"
+/>
+
 </Link>
 
 {/* CONTENT */}

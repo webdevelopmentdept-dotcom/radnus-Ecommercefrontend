@@ -208,13 +208,12 @@ const avgRating =
   {product.images &&
     product.images.map((item, i) => (
       <img
-        draggable="false"
-       className="w-full h-full object-contain"
+  draggable="false"
+  className="w-full h-full object-contain"
+  src={`${process.env.REACT_APP_BACKEND_URL}${item.url}`}
+  alt={product.name}
+/>
 
-        src={item.url}
-        alt={product.name}
-        key={item._id || item.url}
-      />
     ))}
 </Slider>
 
@@ -364,10 +363,14 @@ const avgRating =
 
     <div className="bg-white rounded-xl p-5 shadow-sm flex items-center gap-4">
       <img
-        src={product.brand?.logo?.url}
-        alt={product.brand?.name}
-        className="w-20 h-10 object-contain border rounded p-1"
-      />
+  src={
+    product.brand?.logo?.url
+      ? `${process.env.REACT_APP_BACKEND_URL}${product.brand.logo.url}`
+      : "/placeholder.png"
+  }
+  alt={product.brand?.name}
+/>
+
       <div>
         <p className="text-sm text-gray-500">Brand</p>
         <p className="font-medium">{product.brand?.name}</p>
@@ -469,11 +472,15 @@ const avgRating =
     {rev.images.map((img, idx) => (
      <img
   key={idx}
-  src={img.url}
+  src={`${process.env.REACT_APP_BACKEND_URL}${img.url}`}
   alt="review"
-  onClick={() => setZoomImage(img.url)}
-  className="w-20 h-20 object-cover rounded border cursor-pointer hover:scale-105 transition"
+  onClick={() =>
+    setZoomImage(
+      `${process.env.REACT_APP_BACKEND_URL}${img.url}`
+    )
+  }
 />
+
 
     ))}
   </div>

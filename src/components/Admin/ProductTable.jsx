@@ -157,7 +157,10 @@ const ProductTable = () => {
   const rows = products.map((item) => ({
     id: item._id,
     name: item.name,
-    image: item.images?.[0]?.url || "/placeholder.png",
+   image: item.images?.[0]?.url
+  ? `${process.env.REACT_APP_BACKEND_URL}${item.images[0].url}`
+  : "/placeholder.png",
+
     category: item.category,
     stock: item.stock || 0,
     customerPrice: item.prices?.customer || 0,
