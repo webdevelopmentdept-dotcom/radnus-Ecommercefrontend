@@ -48,11 +48,13 @@ useEffect(() => {
   const submitHandler = async (e) => {
     e.preventDefault();
     setPayDisable(true);
+    const API = process.env.REACT_APP_API_URL;
+
 
     try {
       // 1️⃣ Create Razorpay Order
       const res = await fetch(
-        "http://localhost:10000/api/v1/payment/process",
+          `${API}/api/v1/payment/process`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -82,8 +84,8 @@ useEffect(() => {
             console.log("HANDLER CALLED");
             navigate("/orders", { replace: true });
 
-            const verifyRes = await fetch(
-              "http://localhost:10000/api/v1/payment/verify",
+            const verifyRes = await  fetch(
+              `${API}/api/v1/payment/verify`,
               {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
