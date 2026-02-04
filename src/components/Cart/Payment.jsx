@@ -48,7 +48,7 @@ useEffect(() => {
   const submitHandler = async (e) => {
     e.preventDefault();
     setPayDisable(true);
-    const API = process.env.REACT_APP_API_URL;
+    const API = process.env.REACT_APP_BACKEND_URL;
 
 
     try {
