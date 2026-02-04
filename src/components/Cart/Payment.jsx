@@ -12,10 +12,6 @@ import MetaData from "../Layouts/MetaData";
 import { emptyCart } from "../../actions/cartAction";
 import { NEW_ORDER_RESET } from "../../constants/orderConstants";
 import { useNavigate } from "react-router-dom";
-
-
-
-
 const Payment = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -79,70 +75,57 @@ useEffect(() => {
         description: "Order Payment",
         order_id: data.order.id,
 
-        handler: async function (response) {
-          try {
-            console.log("HANDLER CALLED");
-            navigate("/orders", { replace: true });
+       handler: async function (response) {
+  try {
+    const verifyRes = await fetch(
+      `${API}/api/v1/payment/verify`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(response),
+      }
+    );
 
-            const verifyRes = await  fetch(
-              `${API}/api/v1/payment/verify`,
-              {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(response),
-              }
-            );
+    const verifyData = await verifyRes.json();
 
-            const verifyData = await verifyRes.json();
+    if (!verifyData.success) {
+      navigate("/orders/success", {
+        replace: true,
+        state: { success: false },
+      });
+      return;
+    }
 
-            if (!verifyData.success) {
-              navigate("/orders/success", {
-              replace: true,
-              state: { success: false },
-            });
-              // enqueueSnackbar("Payment verification failed", { variant: "error" });
-              // setPayDisable(false);
-              
-              return;
-            }
-
-            await dispatch(
-              newOrder({
-                shippingInfo,
-                orderItems: cartItems.map((item) => ({
-                  product: item.product,
-                  name: item.name,
-                  price: item.price,
-                  quantity: item.quantity,
-                  image: item.image,
-                })),
-                totalPrice,
-                paymentInfo: {
-                  id: response.razorpay_payment_id,
-                  status: "Paid",
-                },
-              })
-            );
-
-            enqueueSnackbar("Order placed successfully ✅", { variant: "success" });
-
-            dispatch(emptyCart());
-            // dispatch({ type: NEW_ORDER_RESET });
-
-
-
-            // navigate("/orders", { replace: true });
-
-            // // 🔥 Guaranteed redirect
-            // setTimeout(() => {
-            //   window.location.replace("/orders");
-            // }, 500);
-
-          } catch (err) {
-            enqueueSnackbar("Payment verification error", { variant: "error" });
-            setPayDisable(false);
-          }
+    await dispatch(
+      newOrder({
+        shippingInfo,
+        orderItems: cartItems.map((item) => ({
+          product: item.product,
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+          image: item.image,
+        })),
+        totalPrice,
+        paymentInfo: {
+          id: response.razorpay_payment_id,
+          status: "Paid",
         },
+      })
+    );
+
+    enqueueSnackbar("Order placed successfully ✅", { variant: "success" });
+
+    // 🔥 MUST ORDER
+    dispatch(emptyCart());
+    navigate("/orders", { replace: true });
+
+  } catch (err) {
+    enqueueSnackbar("Payment verification error", { variant: "error" });
+    setPayDisable(false);
+  }
+},
+
 
 
 

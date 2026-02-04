@@ -47,10 +47,12 @@ export const removeItemsFromCart =
 
 // EMPTY CART
 export const emptyCart = () => async (dispatch) => {
-  dispatch({ type: EMPTY_CART });
+  localStorage.removeItem("cartItems"); // 🔥 IMPORTANT
+  localStorage.removeItem("shippingInfo"); // optional but good
 
-  localStorage.setItem("cartItems", JSON.stringify([]));
+  dispatch({ type: EMPTY_CART });
 };
+
 
 // SAVE SHIPPING INFO
 export const saveShippingInfo =
