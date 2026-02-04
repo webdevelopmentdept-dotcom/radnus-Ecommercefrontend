@@ -44,7 +44,7 @@ export const newOrderReducer = (state = {}, { type, payload }) => {
     case NEW_ORDER_SUCCESS:
       return {
         loading: false,
-        success: true,      // 🔥 IMPORTANT
+        success: true,   // 🔥 VERY IMPORTANT
         order: payload,
       };
 
@@ -54,8 +54,10 @@ export const newOrderReducer = (state = {}, { type, payload }) => {
         error: payload,
       };
 
-    case NEW_ORDER_RESET:   // 🔥 MAIN FIX
-      return {};
+    case NEW_ORDER_RESET:
+      return {
+        success: false, // 🔥 DO NOT return {}
+      };
 
     case CLEAR_ERRORS:
       return {
@@ -67,6 +69,7 @@ export const newOrderReducer = (state = {}, { type, payload }) => {
       return state;
   }
 };
+
 
 
 // ================= MY ORDERS =================

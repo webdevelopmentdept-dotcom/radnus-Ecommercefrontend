@@ -57,12 +57,17 @@ let displayPrice = price;
         className="flex flex-col items-center text-center group"
       >
         <div className="w-36 h-36">
-          <img
-            draggable="false"
-            className="w-full h-full object-contain"
-            src={images?.[0]?.url || "/placeholder.png"}
-            alt={name}
-          />
+         <img
+  draggable="false"
+  className="w-full h-full object-contain"
+  src={
+    images?.[0]?.url
+      ? `${process.env.REACT_APP_BACKEND_URL}${images[0].url}`
+      : "/placeholder.png"
+  }
+  alt={name}
+/>
+
         </div>
 
         <h2 className="text-sm mt-4 group-hover:text-primary-blue">

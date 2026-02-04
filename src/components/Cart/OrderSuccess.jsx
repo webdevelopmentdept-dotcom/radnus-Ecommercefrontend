@@ -1,30 +1,53 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import MetaData from '../Layouts/MetaData';
 import successfull from '../../assets/images/Transaction/success.png';
 import failed from '../../assets/images/Transaction/failed.png';
 
-const OrderSuccess = ({ success }) => {
+const OrderSuccess = () => {
 
     const navigate = useNavigate();
+    const { state } = useLocation();
+
+    // ✅ Frozen value (safe from redux resets)
+   const success = state?.success === true;
+
+
     const [time, setTime] = useState(3);
+
 
     useEffect(() => {
         if (time === 0) {
-            if (success) {
-                navigate("/orders")
-            } else {
-                navigate("/cart")
-            }
+            navigate(success ? "/orders" : "/cart", { replace: true });
             return;
-        };
-        const intervalId = setInterval(() => {
-            setTime(time - 1);
+        }
+
+        const timeoutId = setTimeout(() => {
+            setTime((prev) => prev - 1);
         }, 1000);
 
-        return () => clearInterval(intervalId);
-        // eslint-disable-next-line
-    }, [time]);
+        return () => {
+            clearTimeout(timeoutId);
+        }
+    }, [time, success, navigate]);
+
+
+    // useEffect(() => {
+    //     if (time === 0) {
+    //         if (success) {
+    //             navigate("/orders")
+    //         } else {
+    //             navigate("/cart")
+    //         }
+    //         return;
+    //     };
+    //     const intervalId = setInterval(() => {
+    //         setTime(time - 1);
+    //     }, 1000);
+
+    //     return () => clearInterval(intervalId);
+    //     // eslint-disable-next-line
+    // }, [time]);
 
     return (
         <>

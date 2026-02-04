@@ -158,10 +158,12 @@ useEffect(() => {
 }, [dispatch, productId, error, enqueueSnackbar]);
 
 useEffect(() => {
-  fetch(`/api/v1/reviews?productId=${productId}`)
-    .then(res => res.json())
-    .then(data => setReviews(data.reviews || []))
-    .catch(() => {});
+ fetch(
+  `${process.env.REACT_APP_BACKEND_URL}/api/v1/reviews?productId=${productId}`
+)
+  .then(res => res.json())
+  .then(data => setReviews(data.reviews || []))
+  .catch(() => {});
 }, [productId]);
 
 
@@ -362,14 +364,16 @@ const avgRating =
   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
 
     <div className="bg-white rounded-xl p-5 shadow-sm flex items-center gap-4">
-      <img
+    <img
   src={
     product.brand?.logo?.url
       ? `${process.env.REACT_APP_BACKEND_URL}${product.brand.logo.url}`
       : "/placeholder.png"
   }
   alt={product.brand?.name}
+  className="w-14 h-14 object-contain"
 />
+
 
       <div>
         <p className="text-sm text-gray-500">Brand</p>
@@ -470,21 +474,21 @@ const avgRating =
 {rev.images && rev.images.length > 0 && (
   <div className="flex gap-2 mt-2 flex-wrap">
     {rev.images.map((img, idx) => (
-     <img
-  key={idx}
-  src={`${process.env.REACT_APP_BACKEND_URL}${img.url}`}
-  alt="review"
-  onClick={() =>
-    setZoomImage(
-      `${process.env.REACT_APP_BACKEND_URL}${img.url}`
-    )
-  }
-/>
-
-
+      <img
+        key={idx}
+        src={`${process.env.REACT_APP_BACKEND_URL}${img.url}`}
+        alt="review"
+        onClick={() =>
+          setZoomImage(
+            `${process.env.REACT_APP_BACKEND_URL}${img.url}`
+          )
+        }
+        className="w-20 h-20 object-cover rounded cursor-pointer border"
+      />
     ))}
   </div>
 )}
+
 
 
 

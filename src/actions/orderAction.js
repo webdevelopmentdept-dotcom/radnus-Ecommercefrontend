@@ -2,29 +2,31 @@ import axios from "../axios";import { ALL_ORDERS_FAIL, ALL_ORDERS_REQUEST, ALL_O
 
 // New Order
 export const newOrder = (order) => async (dispatch) => {
-    try {
-        dispatch({ type: NEW_ORDER_REQUEST });
+  try {
+    dispatch({ type: NEW_ORDER_REQUEST });
 
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-            },
-        };
+    const config = {
+      headers: { "Content-Type": "application/json" },
+    };
 
-        const { data } = await axios.post('/api/v1/order/new', order, config);
+    const { data } = await axios.post("/api/v1/order/new", order, config);
 
-        dispatch({
-            type: NEW_ORDER_SUCCESS,
-            payload: data,
-        })
+    dispatch({
+      type: NEW_ORDER_SUCCESS,
+      payload: data,
+    });
 
-    } catch (error) {
-        dispatch({
-            type: NEW_ORDER_FAIL,
-            payload: error.response?.data?.message || error.message,
-        });
-    }
+    return data; // 🔥 IMPORTANT
+  } catch (error) {
+    dispatch({
+      type: NEW_ORDER_FAIL,
+      payload: error.response?.data?.message || error.message,
+    });
+
+    throw error; // 🔥 IMPORTANT
+  }
 };
+
 
 // Get User Orders
 export const myOrders = () => async (dispatch) => {

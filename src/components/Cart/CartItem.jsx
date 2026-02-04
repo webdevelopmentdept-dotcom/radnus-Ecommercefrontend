@@ -55,15 +55,18 @@ const totalPrice = customerPrice * quantity;
       >
         {/* IMAGE */}
    <div className="w-full sm:w-1/5 h-32 sm:h-40 flex items-center justify-center">
+  <img
+    draggable="false"
+    className="max-h-full max-w-full object-contain"
+    src={
+      image
+        ? `${process.env.REACT_APP_BACKEND_URL}${image}`
+        : "/placeholder.png"
+    }
+    alt={name}
+  />
+</div>
 
-
-          <img
-            draggable="false"
-            className="h-full w-full object-contain sm:scale-110"
-            src={image}
-            alt={name}
-          />
-        </div>
 
         {/* DESCRIPTION */}
     <div className="flex flex-col gap-3 sm:gap-5 w-full pr-0 sm:pr-6

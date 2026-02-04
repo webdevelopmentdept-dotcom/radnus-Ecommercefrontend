@@ -31,30 +31,28 @@ const Stepper = ({ activeStep, children }) => {
         <div className="flex flex-col gap-4">
 
             {steps.map((step, index) => {
-
-                return (
-                    <>
-                        {activeStep === index ? (
-                            <div className="flex flex-col shadow rounded-sm">
-                                <div className="flex items-center rounded-t-sm bg-primary-blue px-6 py-2 gap-4">
-                                    <span className="h-5 w-5 flex items-center justify-center text-xs font-medium bg-white rounded-sm text-primary-blue">{index + 1}</span>
-                                    <h2 className="font-medium text-white">{step.label}</h2>
-                                </div>
-                                {children}
-                            </div>
-                        ) : (
-                            <>
-                                {activeStep > index ? (
-                                    <Step isDesc={true} {...step} index={index} />
-                                ) : (
-                                    <Step isDesc={false} {...step} index={index} />
-                                )}
-                            </>
-                        )}
-                    </>
-                )
-            })}
-
+  return (
+    <div key={index}>
+      {activeStep === index ? (
+        <div className="flex flex-col shadow rounded-sm">
+          <div className="flex items-center rounded-t-sm bg-primary-blue px-6 py-2 gap-4">
+            <span className="h-5 w-5 flex items-center justify-center text-xs font-medium bg-white rounded-sm text-primary-blue">
+              {index + 1}
+            </span>
+            <h2 className="font-medium text-white">{step.label}</h2>
+          </div>
+          {children}
+        </div>
+      ) : (
+        <Step
+          isDesc={activeStep > index}
+          {...step}
+          index={index}
+        />
+      )}
+    </div>
+  );
+})}
         </div>
     );
 };

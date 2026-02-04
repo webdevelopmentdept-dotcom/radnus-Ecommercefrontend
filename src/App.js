@@ -159,7 +159,7 @@ const isAdmin = pathname.startsWith("/admin");
           </ProtectedRoute>
         } ></Route>
 
-        <Route path="/orders/success" element={<OrderSuccess success={true} />} />
+        <Route path="/orders/success" element={<OrderSuccess />} />
         <Route path="/orders/failed" element={<OrderSuccess success={false} />} />
         {/* order process */}
 
