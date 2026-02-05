@@ -58,11 +58,12 @@ const totalPrice = customerPrice * quantity;
   <img
     draggable="false"
     className="max-h-full max-w-full object-contain"
-    src={
-      image
-        ? `${process.env.REACT_APP_BACKEND_URL}${image}`
-        : "/placeholder.png"
-    }
+   src={
+  image?.startsWith("http")
+    ? image
+    : `${process.env.REACT_APP_BACKEND_URL}${image}`
+}
+
     alt={name}
   />
 </div>

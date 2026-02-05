@@ -37,7 +37,25 @@ import {
     ALL_USERS_REQUEST,
 } from '../constants/userConstants';
 
-import axios from "../axios"; 
+import axios from "../axios";
+
+export const loadCartFromStorage = () => (dispatch) => {
+
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    const key = user
+        ? `cartItems_${user._id}`
+        : "cartItems_guest";
+
+    const cart = localStorage.getItem(key)
+        ? JSON.parse(localStorage.getItem(key))
+        : [];
+
+    dispatch({
+        type: "LOAD_CART",
+        payload: cart,
+    });
+};
 
 // Login User
 export const loginUser = (email, password) => async (dispatch) => {
@@ -51,16 +69,16 @@ export const loginUser = (email, password) => async (dispatch) => {
             },
         }
 
-       const { data } = await axios.post(
-  '/api/v1/login',
-  { email, password },
-  {
-    headers: {
-      "Content-Type": "application/json",
-    },
-    withCredentials: true,   // ⭐ IMPORTANT
-  }
-);
+        const { data } = await axios.post(
+            '/api/v1/login',
+            { email, password },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                withCredentials: true,   // ⭐ IMPORTANT
+            }
+        );
 
 
         dispatch({
@@ -68,12 +86,18 @@ export const loginUser = (email, password) => async (dispatch) => {
             payload: data.user,
         });
 
+        setTimeout(() => {
+            dispatch(loadCartFromStorage());
+        }, 0);
+
+
     } catch (error) {
-  dispatch({
-    type: LOGIN_USER_FAIL,
-    payload: error.response?.data?.message || error.message,
-  });
-}
+        dispatch({
+            type: LOGIN_USER_FAIL,
+            payload: error.response?.data?.message || error.message,
+        });
+
+    }
 
 };
 
@@ -90,15 +114,15 @@ export const registerUser = (userData) => async (dispatch) => {
         }
 
         const { data } = await axios.post(
-  '/api/v1/register',
-  userData,
-  {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-    withCredentials: true,   // ⭐ IMPORTANT
-  }
-);
+            '/api/v1/register',
+            userData,
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+                withCredentials: true,   // ⭐ IMPORTANT
+            }
+        );
 
 
         dispatch({
@@ -121,8 +145,8 @@ export const loadUser = () => async (dispatch) => {
         dispatch({ type: LOAD_USER_REQUEST });
 
         const { data } = await axios.get('/api/v1/me', {
-  withCredentials: true,   // ⭐ IMPORTANT
-});
+            withCredentials: true,   // ⭐ IMPORTANT
+        });
 
 
         dispatch({
@@ -143,6 +167,11 @@ export const logoutUser = () => async (dispatch) => {
     try {
         await axios.get('/api/v1/logout');
         dispatch({ type: LOGOUT_USER_SUCCESS });
+
+        setTimeout(() => {
+            dispatch(loadCartFromStorage());
+        }, 0);
+
     } catch (error) {
         dispatch({
             type: LOGOUT_USER_FAIL,
@@ -187,54 +216,54 @@ export const updateProfile = (userData) => async (dispatch) => {
 
 // Update User Password
 export const updatePassword = (passwords) => async (dispatch) => {
-  try {
-    dispatch({ type: UPDATE_PASSWORD_REQUEST });
+    try {
+        dispatch({ type: UPDATE_PASSWORD_REQUEST });
 
-    const { data } = await axios.put(
-      "/api/v1/password/update",
-      passwords,
-      {
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+        const { data } = await axios.put(
+            "/api/v1/password/update",
+            passwords,
+            {
+                headers: { "Content-Type": "application/json" },
+            }
+        );
 
-    dispatch({
-      type: UPDATE_PASSWORD_SUCCESS,
-      payload: data.success,
-    });
-  } catch (error) {
-    dispatch({
-      type: UPDATE_PASSWORD_FAIL,
-      payload: error.response?.data?.message || error.message,
-    });
-  }
+        dispatch({
+            type: UPDATE_PASSWORD_SUCCESS,
+            payload: data.success,
+        });
+    } catch (error) {
+        dispatch({
+            type: UPDATE_PASSWORD_FAIL,
+            payload: error.response?.data?.message || error.message,
+        });
+    }
 };
 
 
 
 // Forgot Password
 export const forgotPassword = (emailData) => async (dispatch) => {
-  try {
-    dispatch({ type: FORGOT_PASSWORD_REQUEST });
+    try {
+        dispatch({ type: FORGOT_PASSWORD_REQUEST });
 
-    const { data } = await axios.post(
-      "/api/v1/password/forgot",
-      emailData,
-      {
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+        const { data } = await axios.post(
+            "/api/v1/password/forgot",
+            emailData,
+            {
+                headers: { "Content-Type": "application/json" },
+            }
+        );
 
-    dispatch({
-      type: FORGOT_PASSWORD_SUCCESS,
-      payload: data.message,
-    });
-  } catch (error) {
-    dispatch({
-      type: FORGOT_PASSWORD_FAIL,
-      payload: error.response?.data?.message || error.message,
-    });
-  }
+        dispatch({
+            type: FORGOT_PASSWORD_SUCCESS,
+            payload: data.message,
+        });
+    } catch (error) {
+        dispatch({
+            type: FORGOT_PASSWORD_FAIL,
+            payload: error.response?.data?.message || error.message,
+        });
+    }
 };
 
 
@@ -366,19 +395,19 @@ export const clearErrors = () => async (dispatch) => {
 
 // 🔥 Clear Role Upgrade Message
 export const clearUpgradeMessage = () => async (dispatch) => {
-  try {
-    await axios.put(
-      "/api/v1/user/clear-upgrade-msg",
-      {},
-      {
-        withCredentials: true, // cookie send aagum
-      }
-    );
+    try {
+        await axios.put(
+            "/api/v1/user/clear-upgrade-msg",
+            {},
+            {
+                withCredentials: true, // cookie send aagum
+            }
+        );
 
-    // Optional: user data refresh panna venumna
-    dispatch(loadUser());
+        // Optional: user data refresh panna venumna
+        dispatch(loadUser());
 
-  } catch (error) {
-    console.log(error.response?.data?.message || error.message);
-  }
+    } catch (error) {
+        console.log(error.response?.data?.message || error.message);
+    }
 };

@@ -1,72 +1,90 @@
-import { useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import MetaData from '../Layouts/MetaData';
-import successfull from '../../assets/images/Transaction/success.png';
-import failed from '../../assets/images/Transaction/failed.png';
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import { newOrder } from "../../actions/orderAction";
+import { emptyCart } from "../../actions/cartAction";
 
 const OrderSuccess = () => {
 
-    const navigate = useNavigate();
-    const { state } = useLocation();
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
 
-    // ✅ Frozen value (safe from redux resets)
-   const success = state?.success === true;
+  const paymentId = location.state?.paymentId;
+  const shippingInfo = location.state?.shippingInfo;
+  const cartItems = location.state?.cartItems || [];
+
+  const totalPrice = cartItems.reduce((sum, item) => {
+    return sum + item.price * item.quantity;
+  }, 0);
+
+ useEffect(() => {
+
+  const createOrder = async () => {
+
+    try {
+
+     await dispatch(
+  newOrder({
+    shippingInfo,
+    orderItems: cartItems.map((item) => ({
+      product: item.product,
+      name: item.name,
+      price: item.price,
+      quantity: item.quantity,
+      image: item.image,
+    })),
+    totalPrice,
+    paymentInfo: {
+      id: paymentId,
+      status: "Paid",
+    },
+  })
+);
+
+// dispatch(emptyCart());
+navigate("/orders", { replace: true });
 
 
-    const [time, setTime] = useState(3);
+    //   if (orderRes?.success) {
+
+    //     dispatch(emptyCart());
+
+    //     navigate("/orders", { replace: true });
 
 
-    useEffect(() => {
-        if (time === 0) {
-            navigate(success ? "/orders" : "/cart", { replace: true });
-            return;
-        }
+    //   }
 
-        const timeoutId = setTimeout(() => {
-            setTime((prev) => prev - 1);
-        }, 1000);
+    } catch (err) {
+      console.error(err);
+    }
 
-        return () => {
-            clearTimeout(timeoutId);
-        }
-    }, [time, success, navigate]);
+  };
+
+  if (paymentId && cartItems.length > 0) {
+    createOrder();
+  }
+
+}, []);
 
 
-    // useEffect(() => {
-    //     if (time === 0) {
-    //         if (success) {
-    //             navigate("/orders")
-    //         } else {
-    //             navigate("/cart")
-    //         }
-    //         return;
-    //     };
-    //     const intervalId = setInterval(() => {
-    //         setTime(time - 1);
-    //     }, 1000);
+  // ⭐ SUCCESS UI IMMEDIATE SHOW
+  return (
+    <div className="flex flex-col items-center mt-20 gap-6">
 
-    //     return () => clearInterval(intervalId);
-    //     // eslint-disable-next-line
-    // }, [time]);
+      <h1 className="text-2xl font-semibold text-green-600">
+        🎉 Order Placed Successfully
+      </h1>
 
-    return (
-        <>
-            <MetaData title={`Transaction ${success ? "Successfull" : "Failed"}`} />
+      <button
+        onClick={() => navigate("/orders")}
+        className="bg-primary-orange text-white px-6 py-2 rounded-sm"
+      >
+        View My Orders
+      </button>
 
-            <main className="w-full mt-20">
-
-                {/* <!-- row --> */}
-                <div className="flex flex-col gap-2 items-center justify-center sm:w-4/6 sm:mt-4 m-auto mb-7 bg-white shadow rounded p-6 pb-12">
-                    <img draggable="false" className="w-1/2 h-60 object-contain" src={success ? successfull : failed} alt="Transaction Status" />
-                    <h1 className="text-2xl font-semibold">Transaction {success ? "Successfull" : "Failed"}</h1>
-                    <p className="mt-4 text-lg text-gray-800">Redirecting to {success ? "orders" : "cart"} in {time} sec</p>
-                    <Link to={success ? "/orders" : "/cart"} className="bg-primary-blue mt-2 py-2.5 px-6 text-white uppercase shadow hover:shadow-lg rounded-sm">go to {success ? "orders" : "cart"}</Link>
-                </div>
-                {/* <!-- row --> */}
-
-            </main>
-        </>
-    );
+    </div>
+  );
 };
 
 export default OrderSuccess;

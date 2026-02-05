@@ -31,8 +31,13 @@ const Wishlist = () => {
               >
                 <div className="flex items-center gap-3">
                   <img
-                    src={user?.avatar?.url}
+                    src={
+                      user?.avatar?.url
+                        ? `${process.env.REACT_APP_BACKEND_URL}${user.avatar.url}`
+                        : "/placeholder.png"
+                    }
                     alt="avatar"
+
                     className="w-10 h-10 rounded-full object-cover"
                   />
                   <div>
@@ -65,35 +70,25 @@ const Wishlist = () => {
                   My Wishlist ({wishlistItems.length})
                 </span>
 
-              {wishlistItems.length === 0 && (
-  <div className="flex items-center flex-col gap-2 m-6">
-    <img
-      draggable="false"
-      className="object-contain w-52 h-44"
-      src={emptyWishlistImg}
-      alt="Empty Wishlist"
-    />
-    <span className="text-lg font-medium mt-6">
-      Empty Wishlist
-    </span>
-    <p>You have no items in your wishlist. Start adding!</p>
-  </div>
-)}
-
-                {wishlistItems
-                  .map((item, index) => (
-                    <Product
-                      key={index}
-                      product={item.product}
-                      name={item.name}
-                      price={item.price || 0}
-                      cuttedPrice={item.cuttedPrice || 0}
-                      image={item.image}
-                      ratings={item.ratings || 0}
-                      reviews={item.reviews || 0}
+                {wishlistItems.length === 0 && (
+                  <div className="flex items-center flex-col gap-2 m-6">
+                    <img
+                      draggable="false"
+                      className="object-contain w-52 h-44"
+                      src={emptyWishlistImg}
+                      alt="Empty Wishlist"
                     />
-                  ))
-                  .reverse()}
+                    <span className="text-lg font-medium mt-6">
+                      Empty Wishlist
+                    </span>
+                    <p>You have no items in your wishlist. Start adding!</p>
+                  </div>
+                )}
+
+                {wishlistItems.length > 0 &&
+                  [...wishlistItems].reverse().map((item) => (
+                    <Product key={item.product} item={item} />
+                  ))}
               </div>
             </div>
           </div>

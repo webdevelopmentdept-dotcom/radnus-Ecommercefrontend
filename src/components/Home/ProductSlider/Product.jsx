@@ -18,15 +18,25 @@ const Product = ({ product }) => {
   // ✅ CUSTOMER PRICE ONLY
 const { user } = useSelector((state) => state.user);
 
+// let displayPrice = 0;
+
+// if (user?.role === "dealer") {
+//   displayPrice = prices?.dealer;
+// } else if (user?.role === "distributor") {
+//   displayPrice = prices?.distributor;
+// } else {
+//   // customer / guest
+//   displayPrice = prices?.customer;
+// }
+
 let displayPrice = 0;
 
 if (user?.role === "dealer") {
-  displayPrice = prices?.dealer;
+  displayPrice = product?.prices?.dealer || 0;
 } else if (user?.role === "distributor") {
-  displayPrice = prices?.distributor;
+  displayPrice = product?.prices?.distributor || 0;
 } else {
-  // customer / guest
-  displayPrice = prices?.customer;
+  displayPrice = product?.prices?.customer || 0;
 }
 
 

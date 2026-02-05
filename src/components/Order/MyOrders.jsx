@@ -7,6 +7,7 @@ import { useSnackbar } from "notistack";
 import MetaData from "../Layouts/MetaData";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import Sidebar from "../User/Sidebar";
+import { NEW_ORDER_RESET } from "../../constants/orderConstants";
 
 const MyOrders = () => {
   const dispatch = useDispatch();
@@ -27,6 +28,10 @@ const MyOrders = () => {
     }
     dispatch(myOrders());
   }, [dispatch, error, enqueueSnackbar]);
+
+  useEffect(() => {
+  dispatch({ type: NEW_ORDER_RESET });
+}, [dispatch])
 
   return (
     <>
@@ -118,10 +123,14 @@ const MyOrders = () => {
                           {/* LEFT */}
                           <div className="flex items-center gap-4">
                             <img
-                              src={item.image}
-                              alt={item.name}
-                              className="w-16 h-16 object-contain rounded"
-                            />
+  src={
+    item.image?.startsWith("http")
+      ? item.image
+      : `${process.env.REACT_APP_BACKEND_URL}${item.image}`
+  }
+  alt={item.name}
+  className="w-16 h-16 object-contain rounded"
+/>
 
                             <div>
                               <span

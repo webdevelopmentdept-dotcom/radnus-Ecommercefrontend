@@ -54,18 +54,26 @@ export const userReducer = (state = { user: {} }, { type, payload }) => {
         case LOGIN_USER_SUCCESS:
         case REGISTER_USER_SUCCESS:
         case LOAD_USER_SUCCESS:
+
+            localStorage.setItem("user", JSON.stringify(payload));
+
             return {
                 ...state,
                 loading: false,
                 isAuthenticated: true,
                 user: payload,
             };
+
         case LOGOUT_USER_SUCCESS:
+
+            localStorage.removeItem("user");
+
             return {
                 loading: false,
                 user: null,
                 isAuthenticated: false,
             };
+
         case LOGIN_USER_FAIL:
         case REGISTER_USER_FAIL:
             return {

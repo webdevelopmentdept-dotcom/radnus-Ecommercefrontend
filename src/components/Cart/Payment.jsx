@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PriceSidebar from "./PriceSidebar";
 import Stepper from "./Stepper";
-import { clearErrors, newOrder } from "../../actions/orderAction";
 import { useSnackbar } from "notistack";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import MetaData from "../Layouts/MetaData";
-import { emptyCart } from "../../actions/cartAction";
-import { NEW_ORDER_RESET } from "../../constants/orderConstants";
 import { useNavigate } from "react-router-dom";
+import axios from "../../axios";
+import { emptyCart } from "../../actions/cartAction";
+
 const Payment = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -20,53 +20,22 @@ const Payment = () => {
   const [paymentMethod] = useState("razorpay");
   const [payDisable, setPayDisable] = useState(false);
 
-  const { shippingInfo, cartItems } = useSelector((state) => state.cart);
-  const { success, error } = useSelector((state) => state.newOrder);
+  const { cartItems, shippingInfo } = useSelector((state) => state.cart);
+
 
   const totalPrice = cartItems.reduce((sum, item) => {
-    const price = Number(item.price) || 0;
-    const qty = Number(item.quantity) || 0;
-    return sum + price * qty;
+    return sum + item.price * item.quantity;
   }, 0);
-
-  
-useEffect(() => {
-  if (success) {
-    navigate("/orders", { replace: true });
-        setTimeout(() => {
-      dispatch({ type: NEW_ORDER_RESET });
-    }, 0);
-    // dispatch({ type: NEW_ORDER_RESET });
-  }
-}, [success, navigate, dispatch]);
-
 
   const submitHandler = async (e) => {
     e.preventDefault();
     setPayDisable(true);
-    const API = process.env.REACT_APP_BACKEND_URL;
-
 
     try {
-      // 1️⃣ Create Razorpay Order
-      const res = await fetch(
-          `${API}/api/v1/payment/process`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ amount: totalPrice }),
-        }
-      );
+      const { data } = await axios.post("/api/v1/payment/process", {
+        amount: totalPrice,
+      });
 
-      const data = await res.json();
-
-      if (!data.success || !data.order) {
-        enqueueSnackbar("Unable to initiate payment", { variant: "error" });
-        setPayDisable(false);
-        return;
-      }
-
-      // 2️⃣ Razorpay Options
       const options = {
         key: process.env.REACT_APP_RAZORPAY_KEY_ID,
         amount: data.order.amount,
@@ -75,92 +44,67 @@ useEffect(() => {
         description: "Order Payment",
         order_id: data.order.id,
 
-       handler: async function (response) {
-  try {
-    const verifyRes = await fetch(
-      `${API}/api/v1/payment/verify`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(response),
-      }
-    );
+        handler: async function (response) {
+          console.log('---payment---end---');
 
-    const verifyData = await verifyRes.json();
+          dispatch(emptyCart());
+          try {
+            const verifyRes = await axios.post(
+              "/api/v1/payment/verify",
+              response
+            );
 
-    if (!verifyData.success) {
-      navigate("/orders/success", {
-        replace: true,
-        state: { success: false },
-      });
-      return;
-    }
+            if (!verifyRes.data.success) {
+              enqueueSnackbar("Payment verification failed ❌");
+              setPayDisable(false);
+              return;
+            }
 
-    await dispatch(
-      newOrder({
-        shippingInfo,
-        orderItems: cartItems.map((item) => ({
-          product: item.product,
-          name: item.name,
-          price: item.price,
-          quantity: item.quantity,
-          image: item.image,
-        })),
-        totalPrice,
-        paymentInfo: {
-          id: response.razorpay_payment_id,
-          status: "Paid",
+            // ⭐ Navigate to success page
+            navigate("/orders/success", {
+              state: {
+                paymentId: response.razorpay_payment_id,
+                cartItems,
+                shippingInfo
+              }
+            });
+
+
+          } catch (err) {
+            enqueueSnackbar("Payment verification error ❌");
+            setPayDisable(false);
+          }
         },
-      })
-    );
-
-    enqueueSnackbar("Order placed successfully ✅", { variant: "success" });
-
-    // 🔥 MUST ORDER
-    dispatch(emptyCart());
-    navigate("/orders", { replace: true });
-
-  } catch (err) {
-    enqueueSnackbar("Payment verification error", { variant: "error" });
-    setPayDisable(false);
-  }
-},
-
-
-
 
         modal: {
           ondismiss: function () {
-            enqueueSnackbar("Payment cancelled", { variant: "info" });
+            enqueueSnackbar("Payment cancelled");
             setPayDisable(false);
           },
         },
-
-        theme: { color: "#0f172a" },
       };
 
       const razor = new window.Razorpay(options);
 
       razor.on("payment.failed", function () {
-        enqueueSnackbar("Payment failed", { variant: "error" });
+        enqueueSnackbar("Payment failed ❌");
         setPayDisable(false);
       });
 
       razor.open();
+
     } catch (err) {
-      enqueueSnackbar("Something went wrong", { variant: "error" });
+      enqueueSnackbar("Something went wrong ❌");
       setPayDisable(false);
     }
   };
-
-
 
   return (
     <>
       <MetaData title="Radnus: Secure Payment" />
 
       <main className="w-full mt-20">
-        <div className="flex flex-col sm:flex-row gap-3.5 w-full sm:w-11/12 m-auto sm:mb-7">
+        <div className="flex flex-col sm:flex-row gap-3.5 w-full sm:w-11/12 m-auto">
           <div className="flex-1">
             <Stepper activeStep={3}>
               <div className="w-full bg-white">
@@ -173,7 +117,7 @@ useEffect(() => {
                       <FormControlLabel
                         value="razorpay"
                         control={<Radio />}
-                        label="UPI / Credit / Debit / NetBanking"
+                        label="UPI / Card / NetBanking"
                       />
                     </RadioGroup>
                   </FormControl>
@@ -181,10 +125,7 @@ useEffect(() => {
                   <button
                     type="submit"
                     disabled={payDisable}
-                    className={`${payDisable
-                        ? "bg-gray-400 cursor-not-allowed"
-                        : "bg-primary-orange hover:shadow-lg"
-                      } w-full sm:w-1/3 py-3 font-medium text-white rounded-sm`}
+                    className="bg-primary-orange text-white py-3 rounded-sm"
                   >
                     PLACE ORDER
                   </button>

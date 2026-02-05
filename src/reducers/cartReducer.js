@@ -5,17 +5,26 @@ import {
   SAVE_SHIPPING_INFO,
 } from "../constants/cartConstants";
 
-// ✅ INITIAL STATE
+// ⭐ get user based cart
+const getCartItems = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  const key = user
+    ? `cartItems_${user._id}`
+    : "cartItems_guest";
+
+  return localStorage.getItem(key)
+    ? JSON.parse(localStorage.getItem(key))
+    : [];
+};
+
 const initialState = {
-  cartItems: localStorage.getItem("cartItems")
-    ? JSON.parse(localStorage.getItem("cartItems"))
-    : [],
+  cartItems: getCartItems(),
   shippingInfo: localStorage.getItem("shippingInfo")
     ? JSON.parse(localStorage.getItem("shippingInfo"))
     : {},
 };
 
-// ✅ CART REDUCER
 export const cartReducer = (state = initialState, action) => {
   const { type, payload } = action;
 
@@ -31,17 +40,15 @@ export const cartReducer = (state = initialState, action) => {
         return {
           ...state,
           cartItems: state.cartItems.map((el) =>
-            el.product === isItemExist.product
-              ? { ...el, ...item } // 🔒 backend locked price stays
-              : el
+            el.product === item.product ? item : el
           ),
         };
-      } else {
-        return {
-          ...state,
-          cartItems: [...state.cartItems, item],
-        };
       }
+
+      return {
+        ...state,
+        cartItems: [...state.cartItems, item],
+      };
     }
 
     case REMOVE_FROM_CART:
@@ -56,6 +63,7 @@ export const cartReducer = (state = initialState, action) => {
       return {
         ...state,
         cartItems: [],
+        shippingInfo: {},
       };
 
     case SAVE_SHIPPING_INFO:
@@ -64,7 +72,17 @@ export const cartReducer = (state = initialState, action) => {
         shippingInfo: payload,
       };
 
+      case "LOAD_CART":
+  return {
+    ...state,
+    cartItems: payload,
+  };
+
+
     default:
       return state;
   }
+
+
 };
+
