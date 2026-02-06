@@ -114,15 +114,13 @@ export const registerUser = (userData) => async (dispatch) => {
         }
 
         const { data } = await axios.post(
-            '/api/v1/register',
-            userData,
-            {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-                withCredentials: true,   // ⭐ IMPORTANT
-            }
-        );
+  "/api/v1/register",
+  userData,
+  {
+    withCredentials: true, // ✅ IMPORTANT
+  }
+);
+
 
 
         dispatch({
@@ -191,11 +189,14 @@ export const updateProfile = (userData) => async (dispatch) => {
             },
         };
 
-        await axios.put(
-            '/api/v1/me/update',
-            userData,
-            config
-        );
+       await axios.put(
+  "/api/v1/me/update",
+  userData,
+  {
+    withCredentials: true,
+  }
+);
+
 
         dispatch({
             type: UPDATE_PROFILE_SUCCESS,

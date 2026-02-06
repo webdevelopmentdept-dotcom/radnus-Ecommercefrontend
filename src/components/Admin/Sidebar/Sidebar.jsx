@@ -60,7 +60,16 @@ const Sidebar = ({ activeTab, setToggleSidebar }) => {
 
       {/* USER INFO */}
       <div className="flex items-center gap-3 bg-gray-700 p-4">
-        <Avatar src={user?.avatar?.url} />
+        <Avatar
+  src={
+    user?.avatar?.url
+      ? user.avatar.url.startsWith("http")
+        ? user.avatar.url
+        : `${process.env.REACT_APP_BACKEND_URL}${user.avatar.url}`
+      : "/placeholder.png"
+  }
+/>
+
         <div>
           <div className="font-medium">{user?.name}</div>
           <div className="text-sm text-gray-300">{user?.email}</div>

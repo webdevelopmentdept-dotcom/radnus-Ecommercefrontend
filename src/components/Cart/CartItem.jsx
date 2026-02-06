@@ -87,7 +87,7 @@ const totalPrice = customerPrice * quantity;
                 {name.length > 42 ? `${name.substring(0, 42)}...` : name}
               </p>
               <span className="text-sm text-gray-500">
-                Seller: {seller}
+                Seller : Radnus {seller}
               </span>
             </div>
 

@@ -55,19 +55,26 @@ const UserTable = () => {
       headerName: "Name",
       minWidth: 200,
       flex: 1,
-      renderCell: (params) => (
-        <div className="flex items-center gap-2">
-          <div className="w-10 h-10 rounded-full">
-            <img
-              draggable="false"
-              src={params.row.avatar}
-              alt={params.row.name}
-              className="w-full h-full rounded-full object-cover"
-            />
-          </div>
-          {params.row.name}
-        </div>
-      ),
+     renderCell: (params) => (
+  <div className="flex items-center gap-2">
+    <div className="w-10 h-10 rounded-full">
+      <img
+        draggable="false"
+        src={
+          params.row.avatar
+            ? params.row.avatar.startsWith("http")
+              ? params.row.avatar
+              : `${process.env.REACT_APP_BACKEND_URL}${params.row.avatar}`
+            : "/placeholder.png"
+        }
+        alt={params.row.name}
+        className="w-full h-full rounded-full object-cover"
+      />
+    </div>
+    {params.row.name}
+  </div>
+),
+
     },
     {
       field: "email",

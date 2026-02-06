@@ -183,12 +183,15 @@ const MyOrders = () => {
                     </div>
 
                     <div className="flex gap-3 flex-wrap">
-                      <Link
-                        to="/orders"
-                        className="px-4 py-2 border rounded text-sm hover:bg-gray-50"
-                      >
-                        Track Order
-                      </Link>
+                      {orders.length > 0 && (
+  <Link
+    to={`/order_details/${orders[0]._id}`}
+    className="px-4 py-2 border rounded text-sm hover:bg-gray-50"
+  >
+    Track Order
+  </Link>
+)}
+
 
                       <Link
                         to="/customer-service"

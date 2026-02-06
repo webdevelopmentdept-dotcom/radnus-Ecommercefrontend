@@ -122,10 +122,17 @@ dispatch(submitDeliveredReview(formData));
                 >
                   <div className="flex flex-col sm:flex-row gap-4">
                     <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-20 h-20 sm:w-24 sm:h-24 object-contain border rounded"
-                    />
+  src={
+    item.image
+      ? item.image.startsWith("http")
+        ? item.image
+        : `${process.env.REACT_APP_BACKEND_URL}${item.image}`
+      : "/placeholder.png"
+  }
+  alt={item.name}
+  className="w-20 h-20 sm:w-24 sm:h-24 object-contain border rounded"
+/>
+
 
                     <div className="flex-1">
                       <p className="font-medium">{item.name}</p>

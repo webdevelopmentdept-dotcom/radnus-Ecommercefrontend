@@ -185,7 +185,7 @@ const handleAddMoney = async () => {
                   My Wallet
                 </h1>
                 <p className="text-sm text-gray-500 mt-1">
-                  Wallet balance, transactions, refunds ellam inga show aagum.
+                  Wallet balance, transactions, refunds show.
                 </p>
               </div>
 

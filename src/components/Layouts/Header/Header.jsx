@@ -256,17 +256,26 @@ const Header = ({ variant = "default" }) => {
   />
 
   {isAuthenticated && user ? (
-    <img
-      src={user?.avatar?.url}
-      className="w-[24px] h-[24px] rounded-full cursor-pointer"
-      onClick={() => navigate("/account")}
-    />
-  ) : (
-    <AccountCircleIcon
-      className="cursor-pointer text-[20px]"
-      onClick={() => navigate("/login")}
-    />
-  )}
+  <img
+    src={
+      user?.avatar?.url
+        ? user.avatar.url.startsWith("http")
+          ? user.avatar.url
+          : `${process.env.REACT_APP_BACKEND_URL}${user.avatar.url}`
+        : "/placeholder.png"
+    }
+    alt="avatar"
+    className="w-[24px] h-[24px] rounded-full object-cover cursor-pointer"
+    onClick={() => navigate("/account")}
+  />
+) : (
+  <AccountCircleIcon
+    className="cursor-pointer text-[20px]"
+    onClick={() => navigate("/login")}
+  />
+)}
+
+   
 
   <ShoppingCartIcon
     className="cursor-pointer text-[20px]"

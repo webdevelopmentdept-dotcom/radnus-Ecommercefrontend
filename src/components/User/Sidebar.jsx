@@ -29,13 +29,20 @@ const Sidebar = ({ activeTab, showProfileCard = true }) => {
 
 
       {/* PROFILE CARD */}
-     {showProfileCard && (
+  {showProfileCard && (
   <div className="bg-white rounded-lg shadow p-4 flex items-center gap-3 mb-4">
     <img
-      src={user?.avatar?.url}
+      src={
+        user?.avatar?.url
+          ? user.avatar.url.startsWith("http")
+            ? user.avatar.url
+            : `${process.env.REACT_APP_BACKEND_URL}${user.avatar.url}`
+          : "/placeholder.png"
+      }
       alt="avatar"
       className="w-12 h-12 rounded-full object-cover"
     />
+
     <div>
       <p className="text-xs text-gray-500">Hello,</p>
       <p className="font-medium text-gray-800">{user?.name}</p>
