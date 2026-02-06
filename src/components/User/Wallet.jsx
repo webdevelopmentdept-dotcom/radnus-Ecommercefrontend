@@ -86,10 +86,10 @@ const handleAddMoney = async () => {
 
     handler: async function (response) {
       // 3️⃣ Verify & credit wallet
- const verifyRes = await fetch("/api/v1/wallet/verify-payment", {
+ const verifyRes = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/wallet/verify-payment`, {
   method: "POST",
   headers: { "Content-Type": "application/json" },
-  credentials: "include",   // ✅ MUST
+  credentials: "include",
   body: JSON.stringify({
     razorpay_payment_id: response.razorpay_payment_id,
     razorpay_order_id: response.razorpay_order_id,
@@ -97,6 +97,7 @@ const handleAddMoney = async () => {
     amount,
   }),
 });
+
 
 
 
