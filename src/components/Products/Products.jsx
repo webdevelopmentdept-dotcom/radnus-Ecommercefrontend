@@ -77,7 +77,15 @@ const Products = () => {
 
   return (
     <>
-      <MetaData title="All Products | Radnus" />
+     <MetaData
+  title="All Mobile Accessories & Tools | Radnus Communication"
+  description="Browse all mobile accessories, chargers, cables and tools at wholesale and retail prices from Radnus Communication."
+  keywords="mobile accessories, chargers, cables,best chargers, radnus"
+  image="https://radnusone.com/images/logo2.png"
+  url="https://radnusone.com/products"
+  robots="index, follow"
+/>
+
 
  <main className="w-full">
 

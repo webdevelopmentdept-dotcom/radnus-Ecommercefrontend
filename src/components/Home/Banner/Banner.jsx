@@ -35,86 +35,96 @@ const Banner = () => {
   return (
     <>
       {/* ===== BANNER STYLES (NO BACKGROUND HERE) ===== */}
-      <style>{`
-        .efyer-hero {
-          position: relative;
-          height: 440px;
-          display: flex !important;
-          align-items: center;
-          justify-content: center;
-          text-align: center;
-          color: #fff;
-          background: transparent; /* 🔥 IMPORTANT */
-        }
+     <style>{`
+.efyer-hero {
+  position: relative;
+  height: calc(100vh - 64px);
+  width: 100%;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+}
 
-        .efyer-content {
-          position: relative;
-          z-index: 2;
-        }
+.efyer-content {
+  position: relative;
+  z-index: 2;
+  transform: translateY(-36px);
+}
 
-        .efyer-content h5 {
-          font-size: 16px;
-          letter-spacing: 2px;
-          margin-bottom: 12px;
-          opacity: 0.9;
-        }
+.efyer-content h5 {
+  font-size: 16px;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
 
-        .efyer-content h1 {
-          font-size: 48px;
-          font-weight: 800;
-          margin-bottom: 22px;
-        }
+.efyer-content h1 {
+  font-size: 48px;
+  font-weight: 800;
+  margin-bottom: 22px;
+}
 
-        .efyer-btn {
-          background: #111;
-          color: #fff;
-          padding: 14px 36px;
-          border-radius: 4px;
-          font-weight: 600;
-          border: none;
-          cursor: pointer;
-        }
+.efyer-btn {
+  background: #111;
+  color: #fff;
+  padding: 14px 36px;
+  border-radius: 4px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+}
 
-        /* ===== ARROWS ===== */
-        .efyer-arrow {
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          width: 44px;
-          height: 44px;
-          background: rgba(0,0,0,0.35);
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          z-index: 5;
-          color: #fff;
-        }
+/* 🔥 SLICK FIX */
+.slick-slider {
+  position: relative;
+  height: 100%;
+}
 
-        .efyer-arrow.left {
-          left: 24px;
-        }
+.slick-list,
+.slick-track {
+  height: 100%;
+}
 
-        .efyer-arrow.right {
-          right: 24px;
-        }
+.slick-slide {
+  height: 100%;
+}
 
-        .efyer-arrow:hover {
-          background: rgba(0,0,0,0.55);
-        }
+.slick-slide > div {
+  height: 100%;
+}
 
-        @media (max-width: 768px) {
-          .efyer-hero {
-            height: 300px;
-          }
+/* 🔥 ARROWS */
+.efyer-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 44px;
+  height: 44px;
+  background: rgba(0,0,0,0.35);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #fff;
+}
 
-          .efyer-content h1 {
-            font-size: 28px;
-          }
-        }
-      `}</style>
+.efyer-arrow.left {
+  left: 24px;
+}
 
+.efyer-arrow.right {
+  right: 24px;
+}
+
+@media (max-width: 768px) {
+  .efyer-content h1 {
+    font-size: 28px;
+  }
+}
+`}</style>
       {/* ===== SLIDER ===== */}
       <Slider {...settings}>
         <div>

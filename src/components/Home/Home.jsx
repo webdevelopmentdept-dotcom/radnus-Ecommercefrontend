@@ -29,7 +29,14 @@ const Home = () => {
 
   return (
     <>
-      <MetaData title="Radnus – Mobile Accessories Wholesale & Dealer Portal" />
+      <MetaData
+  title="Radnus – Mobile Accessories Wholesale & Dealer Portal"
+  description="Wholesale mobile accessories dealer portal for retailers and distributors"
+  keywords="mobile accessories wholesale, dealer portal, radnus communication"
+  image="https://radnusone.com/logo2.png"
+  url="https://radnusone.com"
+/>
+
 
       {/* ===== EFYER HERO AREA (ONE BACKGROUND) ===== */}
       <section className="efyer-hero-wrapper">

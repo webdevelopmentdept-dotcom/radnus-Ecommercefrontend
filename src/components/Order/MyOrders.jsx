@@ -8,6 +8,7 @@ import MetaData from "../Layouts/MetaData";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import Sidebar from "../User/Sidebar";
 import { NEW_ORDER_RESET } from "../../constants/orderConstants";
+import { Helmet } from "react-helmet";
 
 const MyOrders = () => {
   const dispatch = useDispatch();
@@ -35,8 +36,12 @@ const MyOrders = () => {
 
   return (
     <>
-      <MetaData title="My Orders | Radnus" />
-
+   
+<MetaData
+    title="My Orders | Radnus"
+    description="View and track your orders"
+    robots="noindex, nofollow"
+  />
       <main className="w-full mt-20 sm:mt-16">
         <div className="max-w-7xl mx-auto px-4">
 

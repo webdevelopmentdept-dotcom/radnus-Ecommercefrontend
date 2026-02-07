@@ -103,7 +103,12 @@ dispatch(submitDeliveredReview(formData));
 
   return (
     <>
-      <MetaData title="Order Details | Radnus" />
+    <MetaData
+  title="Order Details | Radnus"
+  description="View order details, tracking status and delivery updates"
+  robots="noindex, nofollow"
+/>
+
 
       <main className="w-full mt-16 bg-gray-50 min-h-screen">
         {loading ? (

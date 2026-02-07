@@ -191,7 +191,23 @@ const avgRating =
         <Loader />
       ) : (
         <>
-         <MetaData title={product?.name || "Product"} />
+        <MetaData
+  title={`${product?.name} | Buy Online at Best Price | Radnus`}
+  description={
+    product?.description
+      ? product.description.substring(0, 150)
+      : "Buy genuine mobile accessories at Radnus"
+  }
+  keywords={`${product?.name}, ${product?.brand?.name}, mobile accessories`}
+  image={
+    product?.images?.length > 0
+      ? `${process.env.REACT_APP_BACKEND_URL}${product.images[0].url}`
+      : "https://radnusone.com/images/logo2.png"
+  }
+  url={`https://radnusone.com/product/${product?._id}`}
+  robots="index, follow"
+/>
+
       <main className="w-full pt-[64px] sm:pt-0">
 
 
