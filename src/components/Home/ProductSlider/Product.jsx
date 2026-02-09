@@ -118,86 +118,118 @@ if (user?.role === "dealer") {
 
 
       {/* INTERNAL CSS */}
-      <style>{`
-        .product-card {
-          position: relative;
-          height: 340px;
-          border: 1px solid #eee;
-          border-radius: 6px;
-          padding: 14px 14px 10px;
-          background: #fff;
-          display: flex;
-          flex-direction: column;
-        }
+    <style>{`
+/* ================= BASE (DESKTOP DEFAULT) ================= */
+.product-card {
+  position: relative;
+  width: 100%;
+  height: 300px;              /* ✅ DESKTOP HEIGHT */
+  border: 1px solid #eee;
+  border-radius: 6px;
+  padding: 14px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
 
-        .wishlist {
-          position: absolute;
-          top: 10px;
-          right: 10px;
-          color: #ccc;
-          cursor: pointer;
-        }
+/* ===== WISHLIST ===== */
+.wishlist {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #ccc;
+  cursor: pointer;
+}
 
-        .wishlist.active {
-          color: #e53935;
-        }
+.wishlist.active {
+  color: #e53935;
+}
 
-        .product-image {
-          height: 160px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
+/* ===== IMAGE ===== */
+.product-image {
+  height: 140px;              /* ✅ DESKTOP IMAGE */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-        .product-image img {
-          max-height: 100%;
-          object-fit: contain;
-        }
+.product-image img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
 
-        .product-body {
-          display: flex;
-          flex-direction: column;
-          gap: 6px;
-          margin-top: 10px;
-          flex-grow: 1;
-        }
+/* ===== BODY ===== */
+.product-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* 🔥 equal spacing */
+  flex-grow: 1;
+  margin-top: 6px;
+}
 
-        .product-title {
-          font-size: 14px;
-          font-weight: 500;
-          line-height: 1.3;
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-          min-height: 38px;
-        }
+/* ===== TITLE ===== */
+.product-title {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.3;
+  min-height: 36px;           /* ✅ SAME HEIGHT */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 
-        .rating {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          font-size: 12px;
-          color: #666;
-        }
+/* ===== RATING ===== */
+.rating {
+  min-height: 18px;           /* ✅ SAME HEIGHT */
+  font-size: 12px;
+  color: #666;
+}
 
-        .rating-badge {
-          background: #2e7d32;
-          color: #fff;
-          padding: 2px 6px;
-          border-radius: 4px;
-          font-size: 11px;
-          display: flex;
-          align-items: center;
-          gap: 2px;
-        }
+.rating-badge {
+  background: #2e7d32;
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 11px;
+}
 
-        .price {
-          margin-top: 4px;
-          font-size: 14px;
-          font-weight: 600;
-        }
-      `}</style>
+/* ===== PRICE ===== */
+.price {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ================= MOBILE FIX ================= */
+@media (max-width: 600px) {
+  .product-card {
+    height: 250px;            /* ✅ MOBILE COMMON HEIGHT */
+    padding: 10px;
+  }
+
+  .product-image {
+    height: 120px;
+  }
+
+  .product-title {
+    font-size: 13px;
+    min-height: 32px;
+  }
+
+  .price {
+    font-size: 13px;
+  }
+
+  .wishlist {
+    top: 6px;
+    right: 6px;
+  }
+}
+`}</style>
+
+
     </div>
   );
 };

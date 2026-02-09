@@ -36,6 +36,7 @@ const Banner = () => {
     <>
       {/* ===== BANNER STYLES (NO BACKGROUND HERE) ===== */}
      <style>{`
+/* ===== DESKTOP / DEFAULT ===== */
 .efyer-hero {
   position: relative;
   height: calc(100vh - 64px);
@@ -57,12 +58,14 @@ const Banner = () => {
   font-size: 16px;
   letter-spacing: 2px;
   margin-bottom: 12px;
+  opacity: 0.9;
 }
 
 .efyer-content h1 {
   font-size: 48px;
   font-weight: 800;
   margin-bottom: 22px;
+  line-height: 1.2;
 }
 
 .efyer-btn {
@@ -75,7 +78,7 @@ const Banner = () => {
   cursor: pointer;
 }
 
-/* 🔥 SLICK FIX */
+/* ===== SLICK FIX ===== */
 .slick-slider {
   position: relative;
   height: 100%;
@@ -94,7 +97,7 @@ const Banner = () => {
   height: 100%;
 }
 
-/* 🔥 ARROWS */
+/* ===== ARROWS (DESKTOP) ===== */
 .efyer-arrow {
   position: absolute;
   top: 50%;
@@ -102,13 +105,18 @@ const Banner = () => {
   z-index: 10;
   width: 44px;
   height: 44px;
-  background: rgba(0,0,0,0.35);
+  background: rgba(0, 0, 0, 0.35);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   color: #fff;
+  transition: background 0.2s ease;
+}
+
+.efyer-arrow:hover {
+  background: rgba(0, 0, 0, 0.6);
 }
 
 .efyer-arrow.left {
@@ -119,12 +127,53 @@ const Banner = () => {
   right: 24px;
 }
 
+/* ===== MOBILE VIEW ===== */
 @media (max-width: 768px) {
+  .efyer-hero {
+    height: 55vh;               /* 👈 normal banner height */
+    padding: 16px;
+  }
+
+  .efyer-content {
+    transform: translateY(0);   /* 👈 remove desktop lift */
+  }
+
+  .efyer-content h5 {
+    font-size: 12px;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
   .efyer-content h1 {
-    font-size: 28px;
+    font-size: 24px;
+    line-height: 1.3;
+    margin-bottom: 16px;
+    font-weight: 700;
+  }
+
+  .efyer-btn {
+    padding: 10px 24px;
+    font-size: 14px;
+  }
+
+  /* hide arrows – swipe only */
+  .efyer-arrow {
+    display: none;
+  }
+}
+
+/* ===== SMALL MOBILES ===== */
+@media (max-width: 480px) {
+  .efyer-hero {
+    height: 50vh;
+  }
+
+  .efyer-content h1 {
+    font-size: 22px;
   }
 }
 `}</style>
+
       {/* ===== SLIDER ===== */}
       <Slider {...settings}>
         <div>

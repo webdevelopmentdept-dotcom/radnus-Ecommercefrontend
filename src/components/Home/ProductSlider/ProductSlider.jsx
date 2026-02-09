@@ -63,36 +63,69 @@ const ProductSlider = ({ title, tagline }) => {
         View All
       </Link>
 
-      <style>{`
-        .best-sellers {
-          background: #fff;
-          padding: 40px 30px;
-          margin-top: 20px;
-          text-align: center;
-        }
+  <style>{`
+/* ===== BEST SELLERS SECTION ===== */
+.best-sellers {
+  background: #fff;
+  padding: 40px 30px;
+  margin-top: 20px;
+  text-align: center;
+}
 
-        .best-sellers h2 {
-          font-size: 22px;
-          font-weight: 700;
-          margin-bottom: 4px;
-        }
+.best-sellers h2 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
 
-        .best-sellers p {
-          font-size: 14px;
-          color: #777;
-          margin-bottom: 24px;
-        }
+.best-sellers p {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 24px;
+}
 
-        .view-all {
-          display: inline-block;
-          margin-top: 30px;
-          padding: 12px 36px;
-          background: #7b2cff;
-          color: #fff;
-          border-radius: 30px;
-          font-weight: 600;
-        }
-      `}</style>
+/* ===== VIEW ALL BUTTON ===== */
+.view-all {
+  display: inline-block;
+  margin-top: 30px;
+  padding: 12px 36px;
+  background: #7b2cff;
+  color: #fff;
+  border-radius: 30px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* ===== SLICK BASE FIX ===== */
+.slick-slider {
+  width: 100%;
+}
+
+.slick-list {
+  margin: 0;
+}
+
+.slick-track {
+  display: flex;
+}
+
+.slick-slide {
+  height: auto;
+}
+
+/* ===== MOBILE FIX ===== */
+@media (max-width: 600px) {
+  .best-sellers {
+    padding: 30px 10px;   /* 🔥 FIXED SIDE GAP */
+  }
+
+  .slick-slide {
+    padding: 0 6px;       /* 🔥 EVEN SPACING */
+    box-sizing: border-box;
+  }
+}
+`}</style>
+
     </section>
   );
 };

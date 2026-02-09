@@ -209,11 +209,16 @@ const UpdateOrder = () => {
                 className="flex flex-col sm:flex-row bg-white shadow-lg rounded-lg px-4 py-5"
               >
                 <div className="flex gap-4 sm:w-1/2">
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-24 h-24 object-contain"
-                  />
+                 <img
+  src={
+    item.image?.startsWith("http")
+      ? item.image
+      : `${process.env.REACT_APP_BACKEND_URL}${item.image}`
+  }
+  alt={item.name}
+  className="w-24 h-24 object-contain"
+/>
+
                   <div>
                     <p className="font-medium">
                       {item.name}
