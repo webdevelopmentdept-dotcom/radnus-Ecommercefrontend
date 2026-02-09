@@ -37,6 +37,40 @@ const UpdateProduct = () => {
     error: updateError,
   } = useSelector((state) => state.product);
 
+  useEffect(() => {
+  dispatch({ type: REMOVE_PRODUCT_DETAILS });
+  dispatch(getProductDetails(id));
+}, [dispatch, id]);
+
+useEffect(() => {
+  console.log("PRODUCT FROM API 👉", product);
+}, [product]);
+
+
+useEffect(() => {
+  if (!product) return;
+
+  setName(product.name || "");
+  setDescription(product.description || "");
+  setStock(product.stock || "");
+  setWarranty(product.warranty || "");
+  setCategory(product.category || "");
+  setBrand(product.brand?.name || "");
+
+  // ✅ SAME AS PRODUCT TABLE
+ setCustomerPrice(product.price || "");
+setDealerPrice(product.price || "");
+setDistributorPrice(product.price || "");
+
+
+  setHighlights(product.highlights || []);
+  setSpecs(product.specifications || []);
+  setOldImages(product.images || []);
+  setLogoPreview(product.brand?.logo?.url || "");
+}, [product]);
+
+
+
   // ===== STATES =====
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -183,60 +217,87 @@ setDeletedImages([]);    // reset deleted list
     dispatch(updateProduct(id, formData));
   };
 
-  // ===== PREFILL DATA =====
   useEffect(() => {
-    if (!product || product._id !== id) {
-      dispatch(getProductDetails(id));
-    } else {
-      setName(product.name);
-      setDescription(product.description);
+  if (error) {
+    enqueueSnackbar(error, { variant: "error" });
+    dispatch(clearErrors());
+  }
 
-      setStock(product.stock);
-      setWarranty(product.warranty);
-      setCategory(product.category);
-      setBrand(product.brand.name);
-      setDistributorPrice(product.prices?.distributor || "");
-      setDealerPrice(product.prices?.dealer || "");
-      setCustomerPrice(product.prices?.customer || "");
+  if (updateError) {
+    enqueueSnackbar(updateError, { variant: "error" });
+    dispatch(clearErrors());
+  }
 
-      setHighlights(product.highlights || []);
-      setSpecs(product.specifications || []);
-      setOldImages(product.images || []);
-      setLogoPreview(product.brand.logo?.url || "");
-    }
+  if (isUpdated) {
+    enqueueSnackbar("Product Updated Successfully", { variant: "success" });
+    dispatch({ type: UPDATE_PRODUCT_RESET });
+    dispatch({ type: REMOVE_PRODUCT_DETAILS });
+    navigate("/admin/products");
+  }
+}, [
+  dispatch,
+  error,
+  updateError,
+  isUpdated,
+  enqueueSnackbar,
+  navigate,
+]);
 
-    if (error) {
-      enqueueSnackbar(error, { variant: "error" });
-      dispatch(clearErrors());
-    }
 
-    if (updateError) {
-      enqueueSnackbar(updateError, { variant: "error" });
-      dispatch(clearErrors());
-    }
+  // // ===== PREFILL DATA =====
+  // useEffect(() => {
+  //   if (!product || product._id !== id) {
+  //     dispatch(getProductDetails(id));
+  //   } else {
+  //     setName(product.name);
+  //     setDescription(product.description);
 
-    if (isUpdated) {
-      enqueueSnackbar("Product Updated Successfully", { variant: "success" });
-      dispatch({ type: UPDATE_PRODUCT_RESET });
-      dispatch({ type: REMOVE_PRODUCT_DETAILS });
-      navigate("/admin/products");
+  //     setStock(product.stock);
+  //     setWarranty(product.warranty);
+  //     setCategory(product.category);
+  //     setBrand(product.brand.name);
+  //     setDistributorPrice(product.prices?.distributor || "");
+  //     setDealerPrice(product.prices?.dealer || "");
+  //     setCustomerPrice(product.prices?.customer || "");
 
-      // Clear local images after success
-      setImages([]);
-      setImagesPreview([]);
+  //     setHighlights(product.highlights || []);
+  //     setSpecs(product.specifications || []);
+  //     setOldImages(product.images || []);
+  //     setLogoPreview(product.brand.logo?.url || "");
+  //   }
+
+  //   if (error) {
+  //     enqueueSnackbar(error, { variant: "error" });
+  //     dispatch(clearErrors());
+  //   }
+
+  //   if (updateError) {
+  //     enqueueSnackbar(updateError, { variant: "error" });
+  //     dispatch(clearErrors());
+  //   }
+
+  //   if (isUpdated) {
+  //     enqueueSnackbar("Product Updated Successfully", { variant: "success" });
+  //     dispatch({ type: UPDATE_PRODUCT_RESET });
+  //     dispatch({ type: REMOVE_PRODUCT_DETAILS });
+  //     navigate("/admin/products");
+
+  //     // Clear local images after success
+  //     setImages([]);
+  //     setImagesPreview([]);
 
       
-    }
-  }, [
-    dispatch,
-    product,
-    id,
-    error,
-    updateError,
-    isUpdated,
-    enqueueSnackbar,
-    navigate,
-  ]);
+  //   }
+  // }, [
+  //   dispatch,
+  //   product,
+  //   id,
+  //   error,
+  //   updateError,
+  //   isUpdated,
+  //   enqueueSnackbar,
+  //   navigate,
+  // ]);
 
   return (
     <>

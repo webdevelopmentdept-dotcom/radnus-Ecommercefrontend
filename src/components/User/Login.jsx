@@ -52,8 +52,6 @@ const Login = () => {
     backgroundImage: "url('/images/login-illustrationimg.webp')",
   }}
 ></div>
-
-
           {/* RIGHT – FORM */}
           <div className="p-8 sm:p-12 flex flex-col justify-center">
             <h2 className="text-2xl font-semibold text-gray-800 mb-6">
