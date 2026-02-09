@@ -41,10 +41,9 @@ const Login = () => {
       {loading && <BackdropLoader />}
 
       {/* FULL PAGE BACKGROUND */}
-     <main className="min-h-screen flex justify-center md:items-center bg-gradient-to-br from-blue-100 via-blue-200 to-blue-300 px-4 pt-6 md:pt-0">
+     <main className="min-h-screen flex justify-center md:items-center bg-gradient-to-br from-blue-100 via-blue-200 to-blue-300 px-4 pt-24 md:pt-0">
         {/* CENTER CARD */}
-        <div className="w-full max-w-5xl bg-white rounded-2xl md:rounded-3xl shadow md:shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2">
-
+        <div className="w-full max-w-5xl bg-white rounded-3xl shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2">
 
           {/* LEFT – ILLUSTRATION */}
          <div
@@ -56,8 +55,7 @@ const Login = () => {
 
 
           {/* RIGHT – FORM */}
-         <div className="p-6 sm:p-12 flex flex-col justify-center">
-
+          <div className="p-6 sm:p-12 flex flex-col justify-center">
             <h2 className="text-2xl font-semibold text-gray-800 mb-6">
               Sign in to your account
             </h2>
