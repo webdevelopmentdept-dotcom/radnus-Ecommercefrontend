@@ -60,13 +60,10 @@ let displayPrice = price;
          <img
   draggable="false"
   className="w-full h-full object-contain"
-  src={
-    images?.[0]?.url
-      ? `${process.env.REACT_APP_BACKEND_URL}${images[0].url}`
-      : "/placeholder.png"
-  }
+  src={images?.[0]?.url || "/placeholder.png"}
   alt={name}
 />
+
 
         </div>
 

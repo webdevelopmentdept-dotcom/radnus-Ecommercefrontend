@@ -155,19 +155,17 @@ const ProductTable = () => {
 
   // 🔥 ROWS
   const rows = products.map((item) => ({
-    id: item._id,
-    name: item.name,
-   image: item.images?.[0]?.url
-  ? `${process.env.REACT_APP_BACKEND_URL}${item.images[0].url}`
-  : "/placeholder.png",
+  id: item._id,
+  name: item.name,
+  image: item.images?.[0]?.url || "/placeholder.png",
+  category: item.category,
+  stock: item.stock || 0,
+  customerPrice: item.prices?.customer || 0,
+  dealerPrice: item.prices?.dealer || 0,
+  distributorPrice: item.prices?.distributor || 0,
+  rating: item.ratings || 0,
+}));
 
-    category: item.category,
-    stock: item.stock || 0,
-    customerPrice: item.prices?.customer || 0,
-    dealerPrice: item.prices?.dealer || 0,
-    distributorPrice: item.prices?.distributor || 0,
-    rating: item.ratings || 0,
-  }));
 
   return (
     <>

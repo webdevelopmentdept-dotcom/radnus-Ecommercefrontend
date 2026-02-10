@@ -199,11 +199,8 @@ const avgRating =
       : "Buy genuine mobile accessories at Radnus"
   }
   keywords={`${product?.name}, ${product?.brand?.name}, mobile accessories`}
-  image={
-    product?.images?.length > 0
-      ? `${process.env.REACT_APP_BACKEND_URL}${product.images[0].url}`
-      : "https://radnusone.com/images/logo2.png"
-  }
+image={product?.images?.[0]?.url}
+
   url={`https://radnusone.com/product/${product?._id}`}
   robots="index, follow"
 />
@@ -226,11 +223,8 @@ const avgRating =
         key={i}
         draggable="false"
         className="w-full h-full object-contain"
-        src={
-          item.url.startsWith("http")
-            ? item.url
-            : `${process.env.REACT_APP_BACKEND_URL}${item.url}`
-        }
+       src={item.url}
+
         alt={product.name}
       />
     ))}
@@ -381,19 +375,10 @@ const avgRating =
 
     <div className="bg-white rounded-xl p-5 shadow-sm flex items-center gap-4">
    <img
-  src={
-    product?.brand?.logo?.url
-      ? product.brand.logo.url.startsWith("http")
-        ? product.brand.logo.url
-        : `${process.env.REACT_APP_BACKEND_URL}${product.brand.logo.url}`
-      : "/placeholder.png"
-  }
+  src={product?.brand?.logo?.url || "/placeholder.png"}
   alt={product?.brand?.name || "Brand"}
   className="w-14 h-14 object-contain"
 />
-
-
-
 
       <div>
         <p className="text-sm text-gray-500">Brand</p>
@@ -496,7 +481,8 @@ const avgRating =
     {rev.images.map((img, idx) => (
       <img
         key={idx}
-        src={`${process.env.REACT_APP_BACKEND_URL}${img.url}`}
+       src={img.url}
+
         alt="review"
         onClick={() =>
           setZoomImage(

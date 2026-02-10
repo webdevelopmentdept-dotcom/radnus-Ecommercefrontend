@@ -69,11 +69,14 @@ const SaveForLaterItem = ({
   <img
     draggable="false"
     className="h-full w-full object-contain"
-    src={
-      image?.startsWith("http")
-        ? image
-        : `${process.env.REACT_APP_BACKEND_URL}${image}`
-    }
+   src={
+  image
+    ? image.startsWith("http")
+      ? image
+      : `${process.env.REACT_APP_BACKEND_URL}${image}`
+    : "/placeholder.png"
+}
+
     alt={name}
   />
 </div>

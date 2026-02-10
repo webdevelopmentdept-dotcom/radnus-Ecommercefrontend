@@ -73,12 +73,15 @@ if (user?.role === "dealer") {
   <img
   src={
     images?.[0]?.url
-      ? `${process.env.REACT_APP_BACKEND_URL}${images[0].url}`
+      ? images[0].url.startsWith("http")
+        ? images[0].url
+        : `${process.env.REACT_APP_BACKEND_URL}${images[0].url}`
       : "/placeholder.png"
   }
   alt={name}
   className="mx-auto"
 />
+
 
 </Link>
 

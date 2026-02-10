@@ -127,15 +127,18 @@ const MyOrders = () => {
 >
                           {/* LEFT */}
                           <div className="flex items-center gap-4">
-                            <img
+                          <img
   src={
-    item.image?.startsWith("http")
-      ? item.image
-      : `${process.env.REACT_APP_BACKEND_URL}${item.image}`
+    item.image
+      ? item.image.startsWith("http")
+        ? item.image
+        : `${process.env.REACT_APP_BACKEND_URL}${item.image}`
+      : "/placeholder.png"
   }
   alt={item.name}
   className="w-16 h-16 object-contain rounded"
 />
+
 
                             <div>
                               <span
