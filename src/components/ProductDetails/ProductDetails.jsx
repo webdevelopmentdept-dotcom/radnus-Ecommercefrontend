@@ -219,22 +219,22 @@ const avgRating =
                 {/* <!-- imgbox --> */}
                 <div className="flex flex-col gap-3 m-3">
                         <div className="w-full h-auto sm:h-[420px] pb-6 border relative">
-                    <Slider
-  {...settings}
-  key={product.images?.length}   // 🔥 THIS IS THE FIX
->
+           <Slider {...settings} key={product.images?.length}>
   {product.images &&
     product.images.map((item, i) => (
       <img
-  draggable="false"
-  className="w-full h-full object-contain"
-  src={`${process.env.REACT_APP_BACKEND_URL}${item.url}`}
-  alt={product.name}
-/>
-
+        key={i}
+        draggable="false"
+        className="w-full h-full object-contain"
+        src={
+          item.url.startsWith("http")
+            ? item.url
+            : `${process.env.REACT_APP_BACKEND_URL}${item.url}`
+        }
+        alt={product.name}
+      />
     ))}
 </Slider>
-
                     <div className="absolute top-4 right-4 shadow-lg bg-white w-9 h-9 border flex items-center justify-center rounded-full">
                       <span
                         onClick={addToWishlistHandler}
@@ -380,15 +380,19 @@ const avgRating =
   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
 
     <div className="bg-white rounded-xl p-5 shadow-sm flex items-center gap-4">
-    <img
+   <img
   src={
-    product.brand?.logo?.url
-      ? `${process.env.REACT_APP_BACKEND_URL}${product.brand.logo.url}`
+    product?.brand?.logo?.url
+      ? product.brand.logo.url.startsWith("http")
+        ? product.brand.logo.url
+        : `${process.env.REACT_APP_BACKEND_URL}${product.brand.logo.url}`
       : "/placeholder.png"
   }
-  alt={product.brand?.name}
+  alt={product?.brand?.name || "Brand"}
   className="w-14 h-14 object-contain"
 />
+
+
 
 
       <div>

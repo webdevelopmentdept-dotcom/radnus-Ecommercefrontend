@@ -123,6 +123,9 @@ formData.append("customerPrice", customerPrice);
     formData.set("category", category);
     formData.set("brand", brand);
 
+
+
+
     formData.append("logo", logo);
     images.forEach((img) => formData.append("images", img));
     highlights.forEach((h) => formData.append("highlights", h));
@@ -351,7 +354,7 @@ formData.append("customerPrice", customerPrice);
                   Upload Logo
                   <input
                     type="file"
-                    name="images"
+                    name="logo"
                     hidden
                     accept="image/*"
                     onChange={handleLogoChange}

@@ -58,9 +58,10 @@ useEffect(() => {
   setBrand(product.brand?.name || "");
 
   // ✅ SAME AS PRODUCT TABLE
- setCustomerPrice(product.price || "");
-setDealerPrice(product.price || "");
-setDistributorPrice(product.price || "");
+setCustomerPrice(product.prices?.customer || "");
+setDealerPrice(product.prices?.dealer || "");
+setDistributorPrice(product.prices?.distributor || "");
+
 
 
   setHighlights(product.highlights || []);
@@ -520,8 +521,11 @@ setDeletedImages([]);    // reset deleted list
   oldImages.map((img, i) => (
     <div key={i} className="relative">
       <img
-        src={img.url}
-        alt="old"
+  src={img.url.startsWith("http")
+    ? img.url
+    : `${process.env.REACT_APP_BACKEND_URL}${img.url}`}
+  alt="old"
+
         className="h-16 object-cover rounded"
       />
       <span
