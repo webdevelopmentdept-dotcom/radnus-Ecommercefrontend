@@ -207,8 +207,6 @@ image={product?.images?.[0]?.url}
 />
 
       <main className="w-full pt-[64px] sm:pt-0">
-
-
             {/* <!-- product image & description container --> */}
             <div className="w-full flex flex-col sm:flex-row bg-white sm:p-2 relative">
               {/* <!-- image wrapper --> */}
