@@ -127,23 +127,23 @@ setDistributorPrice(product.prices?.distributor || "");
     reader.readAsDataURL(file);
   };
 
- const handleImagesChange = (e) => {
+const handleImagesChange = (e) => {
   const files = Array.from(e.target.files);
+
+  
+
+  // 🔥 VERY IMPORTANT (OPTION A RULE)
+  setOldImages([]);        // hide old images
+  setDeletedImages([]);    // clear deleted list
 
   setImages(files);
   setImagesPreview([]);
-  
-
-// 🔥 VERY IMPORTANT
-setOldImages([]);        // remove old images from state
-setDeletedImages([]);    // reset deleted list
-
 
   files.forEach((file, index) => {
     const reader = new FileReader();
     reader.onloadend = () => {
-      setImagesPreview((old) => [
-        ...old,
+      setImagesPreview((prev) => [
+        ...prev,
         {
           id: `${file.name}-${index}`,
           url: reader.result,
@@ -153,6 +153,8 @@ setDeletedImages([]);    // reset deleted list
     reader.readAsDataURL(file);
   });
 };
+
+
 
 
   const deleteOldImage = (index) => {
@@ -199,7 +201,7 @@ setDeletedImages([]);    // reset deleted list
     formData.set("stock", stock);
     formData.set("warranty", warranty);
     formData.set("category", category);
-    formData.set("brandname", brand);
+     formData.set("brand", brand);
     formData.append("distributorPrice", distributorPrice);
     formData.append("dealerPrice", dealerPrice);
     formData.append("customerPrice", customerPrice);
@@ -207,7 +209,10 @@ setDeletedImages([]);    // reset deleted list
     if (logo) formData.append("logo", logo);
 
     // New images
-    images.forEach((img) => formData.append("images", img));
+ images.forEach((img, index) => {
+  formData.append("images", img);
+});
+;
 
     // Old images (URLs or IDs)
     deletedImages.forEach((img) => formData.append("deletedImages", img.url));

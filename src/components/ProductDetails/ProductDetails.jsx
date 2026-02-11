@@ -174,16 +174,7 @@ useEffect(() => {
   }
 }, [dispatch, product?.category]);
 
-let displayPrice = 0;
-
-if (userRole === "dealer") {
-  displayPrice = product?.prices?.dealer ?? 0;
-} else if (userRole === "distributor") {
-  displayPrice = product?.prices?.distributor ?? 0;
-} else {
-  // customer / not logged in
-  displayPrice = product?.prices?.customer ?? 0;
-}
+let displayPrice = product?.price ?? 0;
 
 
 
