@@ -7,6 +7,7 @@ import { clearErrors, loadUser, updatePassword } from "../../actions/userAction"
 import { UPDATE_PASSWORD_RESET } from "../../constants/userConstants";
 import BackdropLoader from "../Layouts/BackdropLoader";
 import MetaData from "../Layouts/MetaData";
+import Button from "@mui/material/Button";
 
 
 
@@ -65,31 +66,32 @@ const UpdatePassword = () => {
       dispatch({ type: UPDATE_PASSWORD_RESET });
     }
   }, [dispatch, error, isUpdated, navigate, enqueueSnackbar]);
-return (
+ return (
   <>
     <MetaData title="Password Update | Radnus" />
     {loading && <BackdropLoader />}
 
-    {/* FULL PAGE BACKGROUND */}
-    <main className="min-h-[calc(100vh-120px)] flex items-center justify-center bg-gradient-to-br from-blue-100 via-blue-200 to-blue-300 px-4 py-10">
+    <main className="bg-[#f3f6fb] px-3 py-6">
+      <div className="mx-auto w-full max-w-[960px] bg-white rounded-2xl shadow-[0_16px_40px_rgba(0,0,0,0.08)] overflow-hidden grid grid-cols-1 md:grid-cols-2">
 
-      {/* CENTER CARD */}
-      <div className="w-full max-w-4xl bg-white rounded-3xl shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2">
-
-        {/* LEFT – ILLUSTRATION */}
-        <div
-          className="hidden md:block bg-no-repeat bg-center bg-cover"
-          style={{
-            backgroundImage: "url('/images/login-illustrationimg.webp')",
-          }}
-        />
+        {/* LEFT – IMAGE */}
+        <div className="hidden md:flex items-center justify-center bg-[#f7f9fc]">
+          <img
+            src="/images/loginimage.webp"
+            alt="Update Password"
+            className="w-[85%] max-w-[320px] object-contain"
+          />
+        </div>
 
         {/* RIGHT – FORM */}
-        <div className="p-6 sm:p-8 flex flex-col justify-center">
-
-          <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+        <div className="flex flex-col justify-center px-6 sm:px-8 py-8 sm:py-10">
+          <h2 className="text-xl sm:text-2xl font-semibold text-gray-800">
             Update Password
           </h2>
+
+          <p className="text-sm text-gray-500 mt-1 mb-6">
+            Change your account password below
+          </p>
 
           <form
             onSubmit={updatePasswordSubmitHandler}
@@ -97,51 +99,68 @@ return (
           >
             <TextField
               fullWidth
+              size="small"
               label="Current Password"
               type="password"
               value={oldPassword}
               onChange={(e) => setOldPassword(e.target.value)}
               required
+              sx={{ backgroundColor: "#f9fafb", borderRadius: "8px" }}
             />
 
             <TextField
               fullWidth
+              size="small"
               label="New Password"
               type="password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               required
+              sx={{ backgroundColor: "#f9fafb", borderRadius: "8px" }}
             />
 
             <TextField
               fullWidth
+              size="small"
               label="Confirm New Password"
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
+              sx={{ backgroundColor: "#f9fafb", borderRadius: "8px" }}
             />
 
-            <button
+            <Button
               type="submit"
-              className="mt-4 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-full font-medium transition"
+              fullWidth
+              variant="contained"
+              sx={{
+                mt: 1,
+                py: 1.2,
+                borderRadius: "10px",
+                textTransform: "none",
+                fontSize: "14px",
+                fontWeight: 600,
+                backgroundColor: "#f97316",
+                "&:hover": { backgroundColor: "#ea580c" },
+              }}
             >
               Update Password
-            </button>
+            </Button>
 
             <Link
               to="/account"
-              className="text-sm text-center text-gray-600 hover:underline mt-2"
+              className="text-xs text-center text-gray-600 hover:underline mt-2"
             >
               Cancel and go back
             </Link>
           </form>
-
         </div>
       </div>
     </main>
   </>
 );
+
 
 };
 

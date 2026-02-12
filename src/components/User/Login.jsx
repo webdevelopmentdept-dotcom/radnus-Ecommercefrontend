@@ -6,6 +6,7 @@ import { clearErrors, loginUser } from "../../actions/userAction";
 import { useSnackbar } from "notistack";
 import BackdropLoader from "../Layouts/BackdropLoader";
 import MetaData from "../Layouts/MetaData";
+import Button from "@mui/material/Button";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -41,72 +42,112 @@ const Login = () => {
       {loading && <BackdropLoader />}
 
       {/* FULL PAGE BACKGROUND */}
-     <main className="min-h-screen flex justify-center md:items-center bg-gradient-to-br from-blue-100 via-blue-200 to-blue-300 px-4 pt-24 md:pt-0">
-        {/* CENTER CARD */}
-        <div className="w-full max-w-5xl bg-white rounded-3xl shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2">
+  <main className="bg-[#f3f6fb] px-3 py-6">
+  <div className="mx-auto w-full max-w-[960px] bg-white rounded-2xl shadow-[0_16px_40px_rgba(0,0,0,0.08)] overflow-hidden grid grid-cols-1 md:grid-cols-2">
 
-          {/* LEFT – ILLUSTRATION */}
-         <div
-  className="hidden md:block h-full bg-no-repeat bg-center bg-cover"
-  style={{
-    backgroundImage: "url('/images/login-illustrationimg.webp')",
-  }}
-></div>
-          {/* RIGHT – FORM */}
-          <div className="p-8 sm:p-12 flex flex-col justify-center">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-6">
-              Sign in to your account
-            </h2>
+    {/* LEFT – IMAGE */}
+    <div className="hidden md:flex items-center justify-center bg-[#f7f9fc]">
+      <img
+        src="/images/loginimage.webp"
+        alt="Login Illustration"
+        className="w-[95%] max-w-[300px] object-contain"
+      />
+    </div>
 
-            <form onSubmit={handleLogin} className="flex flex-col gap-4">
-              <TextField
-                fullWidth
-                label="Email address"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
+    {/* RIGHT – FORM */}
+    <div className="flex flex-col justify-center px-6 sm:px-8 py-8 sm:py-10">
+      <h2 className="text-xl sm:text-2xl font-semibold text-gray-800">
+        Welcome Back
+      </h2>
+      <p className="text-sm text-gray-500 mt-1 mb-6">
+        Please login to your account
+      </p>
 
-              <TextField
-                fullWidth
-                label="Password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
+      <form onSubmit={handleLogin} className="flex flex-col gap-4">
+        <TextField
+          fullWidth
+          size="small"
+          label="Email address"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          sx={{
+            backgroundColor: "#f9fafb",
+            borderRadius: "8px",
+          }}
+        />
 
-              <div className="flex justify-end">
-                <Link
-                  to="/password/forgot"
-                  className="text-sm text-blue-600 hover:underline"
-                >
-                  Forgot password?
-                </Link>
-              </div>
+        <TextField
+          fullWidth
+          size="small"
+          label="Password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          sx={{
+            backgroundColor: "#f9fafb",
+            borderRadius: "8px",
+          }}
+        />
 
-              <button
-                type="submit"
-                className="mt-2 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-full font-medium transition"
-              >
-                Sign In
-              </button>
-            </form>
+        <div className="flex items-center justify-between text-xs">
+          <label className="flex items-center gap-2 text-gray-600 cursor-pointer">
+            <input
+              type="checkbox"
+              className="accent-orange-500 w-3.5 h-3.5"
+            />
+            Remember me
+          </label>
 
-            <p className="text-sm text-center text-gray-600 mt-6">
-              Don’t have an account?{" "}
-              <Link
-                to="/register"
-                className="text-blue-600 font-medium hover:underline"
-              >
-                Create one
-              </Link>
-            </p>
-          </div>
-
+          <Link
+            to="/password/forgot"
+            className="text-orange-500 hover:underline"
+          >
+            Forgot Password?
+          </Link>
         </div>
-      </main>
+
+       <div className="relative z-10">
+  
+</div>
+<Button
+  type="submit"
+  fullWidth
+  variant="contained"
+  sx={{
+    mt: 2,
+    py: 1.2,
+    borderRadius: "10px",
+    textTransform: "none",
+    fontSize: "14px",
+    fontWeight: 600,
+    backgroundColor: "#f97316",
+    "&:hover": {
+      backgroundColor: "#ea580c",
+    },
+  }}
+>
+  Login
+</Button>
+
+
+      </form>
+
+      <p className="text-xs text-center text-gray-600 mt-5">
+        Don’t have an account?{" "}
+        <Link
+          to="/register"
+          className="text-orange-500 font-medium hover:underline"
+        >
+          Create Account
+        </Link>
+      </p>
+    </div>
+  </div>
+</main>
+
     </>
   );
 };

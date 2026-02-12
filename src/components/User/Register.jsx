@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, registerUser } from "../../actions/userAction";
 import BackdropLoader from "../Layouts/BackdropLoader";
 import MetaData from "../Layouts/MetaData";
+import Button from "@mui/material/Button";
+
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -101,150 +103,151 @@ const Register = () => {
       {loading && <BackdropLoader />}
 
       {/* FULL PAGE BACKGROUND */}
-      <main className="
-min-h-[calc(100vh-200px)]
+      <main className="bg-[#f3f6fb] px-3 py-6">
+  <div className="mx-auto w-full max-w-[960px] bg-white rounded-2xl shadow-[0_16px_40px_rgba(0,0,0,0.08)] overflow-hidden grid grid-cols-1 md:grid-cols-2">
 
-  flex
-  items-start
-  justify-center
-  bg-gradient-to-br from-blue-100 via-blue-200 to-blue-300
-  px-4
-  pt-20
-">
+    {/* LEFT – IMAGE */}
+    <div className="hidden md:flex items-center justify-center bg-[#f7f9fc]">
+      <img
+        src="/images/loginimage.webp"
+        alt="Register Illustration"
+        className="w-[85%] max-w-[390px] object-contain"
+      />
+    </div>
 
+    {/* RIGHT – FORM */}
+    <div className="flex flex-col justify-center px-6 sm:px-8 py-8 sm:py-10">
+      <h2 className="text-xl sm:text-2xl font-semibold text-gray-800">
+        Create Account
+      </h2>
+      <p className="text-sm text-gray-500 mt-1 mb-6">
+        Please fill the details to register
+      </p>
 
+      <form
+        onSubmit={handleRegister}
+        encType="multipart/form-data"
+        className="flex flex-col gap-4"
+      >
+        <TextField
+          fullWidth
+          size="small"
+          label="Full Name"
+          name="name"
+          value={name}
+          onChange={handleDataChange}
+          required
+          sx={{ backgroundColor: "#f9fafb", borderRadius: "8px" }}
+        />
 
+        <TextField
+          fullWidth
+          size="small"
+          label="Email address"
+          type="email"
+          name="email"
+          value={email}
+          onChange={handleDataChange}
+          required
+          sx={{ backgroundColor: "#f9fafb", borderRadius: "8px" }}
+        />
 
-
-        {/* CENTER CARD */}
-      <div className="w-full max-w-4xl bg-white rounded-3xl shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2">
-
-
-
-          {/* LEFT – ILLUSTRATION */}
-          <div
-            className="hidden md:block h-full bg-no-repeat bg-center bg-cover"
-            style={{
-              backgroundImage: "url('/images/login-illustrationimg.webp')",
-            }}
-          />
-
-          {/* RIGHT – FORM */}
-          <div className="p-6 sm:p-8 flex flex-col justify-center">
-
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">
-
-              Create your account
-            </h2>
-
-            <form
-              onSubmit={handleRegister}
-              encType="multipart/form-data"
-              className="flex flex-col gap-3"
-            >
-              <TextField
-                fullWidth
-                label="Full Name"
-                name="name"
-                value={name}
-                onChange={handleDataChange}
-                required
-              />
-
-              <TextField
-                fullWidth
-                label="Email address"
-                type="email"
-                name="email"
-                value={email}
-                onChange={handleDataChange}
-                required
-              />
-
-              {/* GENDER */}
-              <div className="flex items-center gap-4">
-                <span className="text-sm text-gray-700">Gender:</span>
-                <RadioGroup
-                  row
-                  name="gender"
-                  value={gender}
-                  onChange={handleDataChange}
-                >
-                  <FormControlLabel
-                    value="male"
-                    control={<Radio required />}
-                    label="Male"
-                  />
-                  <FormControlLabel
-                    value="female"
-                    control={<Radio required />}
-                    label="Female"
-                  />
-                </RadioGroup>
-              </div>
-
-              {/* PASSWORDS */}
-              <div className="flex flex-col sm:flex-row gap-3">
-                <TextField
-                  fullWidth
-                  label="Password"
-                  type="password"
-                  name="password"
-                  value={password}
-                  onChange={handleDataChange}
-                  required
-                />
-                <TextField
-                  fullWidth
-                  label="Confirm Password"
-                  type="password"
-                  name="cpassword"
-                  value={cpassword}
-                  onChange={handleDataChange}
-                  required
-                />
-              </div>
-
-              {/* AVATAR */}
-         <div className="flex items-center gap-4 p-3 border rounded-xl bg-gray-50">
-  <Avatar
-    src={avatarPreview}
-    sx={{ width: 56, height: 56 }}
-  />
-
-  <label className="cursor-pointer text-sm font-medium text-blue-600 hover:underline">
-    Upload profile photo
-    <input
-      type="file"
-      name="avatar"
-      accept="image/*"
-      onChange={handleDataChange}
-      className="hidden"
-    />
-  </label>
-</div>
-
-
-              <button
-                type="submit"
-                className="mt-4 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-full font-medium transition"
-              >
-                Sign Up
-              </button>
-            </form>
-
-            <p className="text-sm text-center text-gray-600 mt-6">
-              Already have an account?{" "}
-              <Link
-                to="/login"
-                className="text-blue-600 font-medium hover:underline"
-              >
-                Sign in
-              </Link>
-            </p>
-          </div>
+        {/* GENDER */}
+        <div className="flex items-center gap-3 text-sm">
+          <span className="text-gray-700">Gender:</span>
+          <RadioGroup
+            row
+            name="gender"
+            value={gender}
+            onChange={handleDataChange}
+          >
+            <FormControlLabel
+              value="male"
+              control={<Radio size="small" required />}
+              label="Male"
+            />
+            <FormControlLabel
+              value="female"
+              control={<Radio size="small" required />}
+              label="Female"
+            />
+          </RadioGroup>
         </div>
-      </main>
+
+        {/* PASSWORDS */}
+        <div className="flex flex-col sm:flex-row gap-3">
+          <TextField
+            fullWidth
+            size="small"
+            label="Password"
+            type="password"
+            name="password"
+            value={password}
+            onChange={handleDataChange}
+            required
+            sx={{ backgroundColor: "#f9fafb", borderRadius: "8px" }}
+          />
+          <TextField
+            fullWidth
+            size="small"
+            label="Confirm Password"
+            type="password"
+            name="cpassword"
+            value={cpassword}
+            onChange={handleDataChange}
+            required
+            sx={{ backgroundColor: "#f9fafb", borderRadius: "8px" }}
+          />
+        </div>
+
+        {/* AVATAR */}
+        <div className="flex items-center gap-3 p-2 border rounded-lg bg-gray-50">
+          <Avatar src={avatarPreview} sx={{ width: 48, height: 48 }} />
+          <label className="cursor-pointer text-xs font-medium text-orange-600 hover:underline">
+            Upload profile photo
+            <input
+              type="file"
+              name="avatar"
+              accept="image/*"
+              onChange={handleDataChange}
+              className="hidden"
+            />
+          </label>
+        </div>
+
+        {/* REGISTER BUTTON */}
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          sx={{
+            mt: 1,
+            py: 1.2,
+            borderRadius: "10px",
+            textTransform: "none",
+            fontSize: "14px",
+            fontWeight: 600,
+            backgroundColor: "#f97316",
+            "&:hover": { backgroundColor: "#ea580c" },
+          }}
+        >
+          Create Account
+        </Button>
+      </form>
+
+      <p className="text-xs text-center text-gray-600 mt-5">
+        Already have an account?{" "}
+        <Link
+          to="/login"
+          className="text-orange-500 font-medium hover:underline"
+        >
+          Sign in
+        </Link>
+      </p>
+    </div>
+  </div>
+</main>
+
     </>
   );
 };

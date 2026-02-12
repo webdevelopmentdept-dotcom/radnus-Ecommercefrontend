@@ -7,6 +7,8 @@ import { useSnackbar } from 'notistack';
 import BackdropLoader from '../Layouts/BackdropLoader';
 import MetaData from '../Layouts/MetaData';
 import FormSidebar from './FormSidebar';
+import Button from "@mui/material/Button";
+
 
 const ResetPassword = () => {
 
@@ -54,68 +56,82 @@ const ResetPassword = () => {
       <MetaData title="Password Reset | Radnus" />
 
       {loading && <BackdropLoader />}
-      <main class="w-full mt-12 sm:pt-20 sm:mt-0">
+      <main className="bg-[#f3f6fb] px-3 py-6">
+  <div className="mx-auto w-full max-w-[960px] bg-white rounded-2xl shadow-[0_16px_40px_rgba(0,0,0,0.08)] overflow-hidden grid grid-cols-1 md:grid-cols-2">
 
-        {/* <!-- row --> */}
-        <div class="flex sm:w-4/6 sm:mt-4 m-auto mb-7 bg-white shadow-lg">
+    {/* LEFT – IMAGE */}
+    <div className="hidden md:flex items-center justify-center bg-[#f7f9fc]">
+      <img
+        src="/images/loginimage.webp"
+        alt="Reset Password"
+        className="w-[85%] max-w-[320px] object-contain"
+      />
+    </div>
 
-          <FormSidebar
-            title="Reset Password"
-            tag="Get access to your Orders, Wishlist and Recommendations"
-          />
+    {/* RIGHT – FORM */}
+    <div className="flex flex-col justify-center px-6 sm:px-8 py-8 sm:py-10">
+      <h2 className="text-xl sm:text-2xl font-semibold text-gray-800">
+        Reset Password
+      </h2>
+      <p className="text-sm text-gray-500 mt-1 mb-6">
+        Enter your new password below
+      </p>
 
-          {/* <!-- login column --> */}
-          <div class="flex-1 overflow-hidden">
-            <h2 className="text-center text-2xl font-medium mt-6 text-gray-800">Reset Password</h2>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <TextField
+          fullWidth
+          size="small"
+          label="New Password"
+          type="password"
+          value={newPassword}
+          onChange={(e) => setNewPassword(e.target.value)}
+          required
+          sx={{ backgroundColor: "#f9fafb", borderRadius: "8px" }}
+        />
 
-            {/* <!-- edit info container --> */}
-            <div class="text-center py-10 px-4 sm:px-14">
+        <TextField
+          fullWidth
+          size="small"
+          label="Confirm New Password"
+          type="password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          required
+          sx={{ backgroundColor: "#f9fafb", borderRadius: "8px" }}
+        />
 
-              {/* <!-- input container --> */}
-              <form onSubmit={handleSubmit}>
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          sx={{
+            mt: 1,
+            py: 1.2,
+            borderRadius: "10px",
+            textTransform: "none",
+            fontSize: "14px",
+            fontWeight: 600,
+            backgroundColor: "#f97316",
+            "&:hover": { backgroundColor: "#ea580c" },
+          }}
+        >
+          Update Password
+        </Button>
+      </form>
 
-                <div class="flex flex-col w-full gap-4">
+      <p className="text-xs text-center text-gray-600 mt-5">
+        Remembered your password?{" "}
+        <Link
+          to="/login"
+          className="text-orange-500 font-medium hover:underline"
+        >
+          Sign in
+        </Link>
+      </p>
+    </div>
+  </div>
+</main>
 
-                  <TextField
-                    fullWidth
-                    label="New Password"
-                    type="password"
-                    name="newPassword"
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    required
-                  />
-                  <TextField
-                    fullWidth
-                    label="Confirm New Password"
-                    type="password"
-                    name="confirmPassword"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    required
-                  />
-
-                  {/* <!-- button container --> */}
-                  <div class="flex flex-col gap-2.5 mt-2 mb-32">
-                    <p class="text-xs text-primary-grey text-left">By continuing, you agree to Radnus's <a href="https://www.flipkart.com/pages/terms" class="text-primary-blue"> Terms of Use</a> and <a href="https://www.flipkart.com/pages/privacypolicy" class="text-primary-blue"> Privacy Policy.</a></p>
-                    <button type="submit" class="text-white py-3 w-full bg-primary-orange shadow hover:shadow-lg rounded-sm font-medium">Submit</button>
-                  </div>
-                  {/* <!-- button container --> */}
-
-                </div>
-              </form>
-              {/* <!-- input container --> */}
-
-              <Link to="/register" class="font-medium text-sm text-primary-blue">New to Radnus? Create an account</Link>
-            </div>
-            {/* <!-- edit info container --> */}
-
-          </div>
-          {/* <!-- login column --> */}
-        </div>
-        {/* <!-- row --> */}
-
-      </main>
     </>
   );
 };
