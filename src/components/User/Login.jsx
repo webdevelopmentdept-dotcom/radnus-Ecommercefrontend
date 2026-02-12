@@ -42,7 +42,9 @@ const Login = () => {
       {loading && <BackdropLoader />}
 
       {/* FULL PAGE BACKGROUND */}
-     <main className="bg-[#f3f6fb] px-3 py-6">
+   <main className="bg-[#f3f6fb] px-3 pt-16 pb-8 md:py-6 min-h-[100svh] flex md:block items-center">
+
+
   <div className="mx-auto w-full max-w-[960px] bg-white rounded-2xl shadow-[0_16px_40px_rgba(0,0,0,0.08)] overflow-hidden grid grid-cols-1 md:grid-cols-2">
 
     {/* LEFT – IMAGE */}
