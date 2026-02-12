@@ -42,7 +42,7 @@ const Login = () => {
       {loading && <BackdropLoader />}
 
       {/* FULL PAGE BACKGROUND */}
-  <main className="bg-[#f3f6fb] px-3 py-6">
+     <main className="bg-[#f3f6fb] px-3 py-6">
   <div className="mx-auto w-full max-w-[960px] bg-white rounded-2xl shadow-[0_16px_40px_rgba(0,0,0,0.08)] overflow-hidden grid grid-cols-1 md:grid-cols-2">
 
     {/* LEFT – IMAGE */}
@@ -55,7 +55,7 @@ const Login = () => {
     </div>
 
     {/* RIGHT – FORM */}
-    <div className="flex flex-col justify-center px-6 sm:px-8 py-8 sm:py-10">
+<div className="flex flex-col justify-center px-6 sm:px-8 py-8 sm:py-10 mt-6 md:mt-0">
       <h2 className="text-xl sm:text-2xl font-semibold text-gray-800">
         Welcome Back
       </h2>
